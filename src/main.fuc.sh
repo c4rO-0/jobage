@@ -236,7 +236,7 @@ _jobage_kill_grep() {
         while IFS= read -r iJobInfo;
         do 
             # echo '| ', $iJobInfo
-            iJobNum=$(echo $iJobInfo | awk '{print $5}') 
+            iJobNum=$(echo $iJobInfo | awk '{print $4}') 
             _jobage_kill_index $iJobNum;
             # echo $iJobNum;
         done < <(printf '%s\n' "$jobInfo")
