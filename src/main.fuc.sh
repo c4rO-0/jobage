@@ -1,5 +1,5 @@
 
-function jbg.q() {
+function _jobage_queue_display() {
     
     outType='all'
 
@@ -51,7 +51,7 @@ function jbg.q() {
     IFS="$OLD_IFS"
 }
 
-function jbg.qh()
+function _jobage_queue_history_display()
 {
 
     hline=2
@@ -166,5 +166,5 @@ jbg.cd()
         fi
     fi
 
-    jbg.qh 1
+    _jobage_queue_history_display 1
 }

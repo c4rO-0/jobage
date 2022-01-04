@@ -32,6 +32,15 @@ if [ -x "$(command -v bqueues)" ]; then
     source "$_jobage_srcPath/src/lsf.fuc.sh";
     source "$_jobage_srcPath/src/main.fuc.sh";
 
+    jbg.q() {
+        _jobage_lsf_save_queue "$@"
+        _jobage_queue_display "$@"
+    }
+
+    jbg.qh() {
+        _jobage_queue_history_display "$@"
+    }
+
     jbg.kill() {
         _jobage_lsf_cancel "$@"
     }
