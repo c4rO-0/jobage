@@ -126,7 +126,7 @@ function _jobage_lsf_cancel_all()
 # !!!!!!!!!!!!!!!!!!!!!!!!!!
 # FIXME
 # ==========================
-function _working_jobage_lsf_cancel_grep()
+function _jobage_lsf_cancel_grep()
 {
     jobInfo=$(grep "$@" "$_jobage_dinfo1")
 
@@ -139,10 +139,10 @@ function _working_jobage_lsf_cancel_grep()
     while read -r iJobInfo;
     do 
         echo $iJobInfo
-        iJobNum=$(echo $iJobInfo | awk '{print $5}') 
-        # scancelJob $i;
-        # debug
-        echo 'cancel '  "$iJobNum"
+        # iJobNum=$(echo $iJobInfo | awk '{print $5}') 
+        # # scancelJob $i;
+        # # debug
+        # echo 'cancel '  "$iJobNum"
     done < <(printf '%s\n' "$jobInfo")
     IFS="$OLD_IFS"
 

@@ -150,7 +150,7 @@ function _jobage_queue_history_display()
 }
 
 
-jbg.cd()
+_jobage_cd()
 {
     if [[ $SHELL ==  *"/bash" ]]; then
         if [ "$#" -eq 0 ]; then
@@ -169,3 +169,90 @@ jbg.cd()
     _jobage_queue_history_display 1
 }
 
+# function list
+
+jbg.q() 
+{
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        echo '|-display queue infomation.'
+        exit 0
+    fi
+
+    if [[ "$_jobage_system" == 'lsf' ]]; then
+        _jobage_lsf_save_queue "$@"
+    elif [[ "$_jobage_system" == 'slurm' ]]; then
+
+    fi    
+
+    _jobage_queue_display "$@"
+}
+
+jbg.qrun() 
+{
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        echo '|-only display running queue infomation.'
+        exit 0
+    fi
+
+    if [[ "$_jobage_system" == 'lsf' ]]; then
+        _jobage_lsf_save_queue "$@"
+    elif [[ "$_jobage_system" == 'slurm' ]]; then
+
+    fi    
+
+    _jobage_queue_display "run" "$@"
+}
+
+jbg.kill() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        echo '|-kill spicific job.'
+        echo '|-kill [id]'
+        echo '|-- kill the job with the [id]. [id] is the index shwon in jbg.q '
+        echo '|-kill [grep str]'
+        echo '|-- kill jobs in which job name or working path contains str'
+        echo '|-kill [all]'
+        echo '|-- kill all jobs '
+        exit 0
+    fi
+    if [ "$1" == "grep" ]; then
+        
+        if [[ "$_jobage_system" == 'lsf' ]]; then
+            _jobage_lsf_cancel_grep "${@:2}"
+        elif [[ "$_jobage_system" == 'slurm' ]]; then
+
+        fi
+    elif [ "$1" == "all" ]; then
+        
+        if [[ "$_jobage_system" == 'lsf' ]]; then
+            _jobage_lsf_cancel_all "$@"
+        elif [[ "$_jobage_system" == 'slurm' ]]; then
+
+        fi
+
+    else
+        
+        if [[ "$_jobage_system" == 'lsf' ]]; then
+            _jobage_lsf_cancel "$@"
+        elif [[ "$_jobage_system" == 'slurm' ]]; then
+
+        fi
+
+    fi
+    
+}
+
+
+
+jbg.qh() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        echo '|-show the last two queue informantion.'
+        exit 0
+    fi
+
+    _jobage_queue_history_display "$@"
+}
+
+jbg.cd()
+{
+    _jobage_cd "$@"
+}
