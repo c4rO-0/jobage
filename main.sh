@@ -31,6 +31,17 @@ if [ -x "$(command -v bqueues)" ]; then
     _jobage_is_lsf='y'
     source "$_jobage_srcPath/src/lsf.fuc.sh";
     source "$_jobage_srcPath/src/main.fuc.sh";
+
+    jbg.kill() {
+        _jobage_lsf_cancel "$@"
+    }
+    jbg.killall() {
+        _jobage_lsf_cancel_all "$@"
+    }
+    jbg.killgrep() {
+        _jobage_lsf_cancel_grep "$@"
+    }
+
 elif [ -x "$(command -v squeue)" ]; then
     _jobage_system='slurm'
     _jobage_is_slurm='y'

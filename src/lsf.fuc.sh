@@ -78,3 +78,92 @@ function _jobage_lsf_save_queue() {
 
     echo "$jobs" | nl -v 1 | sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g' | sed 's/\$HOME/~/g' >> "$_jobage_dinfo1"
 }
+
+
+
+function _jobage_lsf_cancel() 
+{
+
+    if [[ $SHELL ==  *"/bash" ]]; then
+
+        if [ "$#" -eq 0 ]; then
+            bkill ${array_jobID[0]}
+        else
+            bkill ${array_jobID[$1-1]}
+        fi
+    else
+        if [ "$#" -eq 0 ]; then
+            bkill ${array_jobID[1]}
+        else
+            bkill ${array_jobID[$1]}
+        fi	
+    fi
+
+}
+
+function _jobage_lsf_cancel_all()
+
+    echo 'Will cancel all jobs !!!'
+    echo '-------------------'
+    echo '| comfirm : y/n ?'
+    read comfirm
+    if [[ $comfirm == 'y' ]];then
+        echo 'comfirm. cancling...'
+
+        for i in $(bjobs | grep $(whoami) | awk '{print $1}');
+        do
+            bkill $i;
+        done
+
+	    echo 'done.'
+    else
+	    echo 'not comfirm'
+    fi
+
+}
+
+
+function _jobage_lsf_cancel_grep()
+{
+    jobInfo=$(bq| grep $@)
+
+#    for iJobInfo in $(echo $jobInfo); 
+    
+    echo 'Will cancel following jobs :'
+
+    OLD_IFS="$IFS"
+    IFS=
+    while read -r iJobInfo;
+    do 
+	echo $iJobInfo
+	iJobNum=$(echo $iJobInfo | awk '{print $5}') 
+	# scancelJob $i;
+	# debug
+	# echo 'cancel ' $iJobNum
+    done < <(printf '%s\n' "$jobInfo")
+    IFS="$OLD_IFS"
+
+    echo '-------------------'
+    echo '| comfirm : y/n ?'
+
+    read comfirm
+    if [[ $comfirm == 'y' ]];then
+        echo 'comfirm. cancling...'
+        OLD_IFS="$IFS"
+        IFS=
+        while IFS= read -r iJobInfo;
+        do 
+            # echo '| ', $iJobInfo
+            iJobNum=$(echo $iJobInfo | awk '{print $5}') 
+            bkill $iJobNum;
+            # echo $iJobNum;
+        done < <(printf '%s\n' "$jobInfo")
+        IFS="$OLD_IFS"
+
+	    echo 'done.'
+    else
+	    echo 'not comfirm'
+    fi
+
+
+}

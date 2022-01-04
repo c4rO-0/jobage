@@ -1,5 +1,5 @@
 
-function _jobage_queue() {
+function jbg.q() {
     
     outType='all'
 
@@ -15,7 +15,7 @@ function _jobage_queue() {
     nline=0
     while read line
     do
-	nline=$((nline+1))
+	    nline=$((nline+1))
         if (( nline > 2 ));then
             strStart='*'
             if [[ $line == *\ "$cPath" ]]; then
@@ -51,15 +51,15 @@ function _jobage_queue() {
     IFS="$OLD_IFS"
 }
 
-function _jobage_queue_history()
+function jbg.qh()
 {
 
     hline=2
     if [ "$#" -ne 0 ]; then
 
-	 if [ "$1" -eq '1' ]; then
-	     hline=1
-	 fi
+        if [ "$1" -eq '1' ]; then
+            hline=1
+        fi
     fi
 
     cPath=$(pwd| sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g')
@@ -147,4 +147,24 @@ function _jobage_queue_history()
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
 
+}
+
+
+jbg.cd()
+{
+    if [[ $SHELL ==  *"/bash" ]]; then
+        if [ "$#" -eq 0 ]; then
+            cd "${array_jobDir[0]}"
+        else
+            cd "${array_jobDir[$1-1]}"
+        fi
+    else
+        if [ "$#" -eq 0 ]; then
+            cd "${array_jobDir[1]}"
+        else
+            cd "${array_jobDir[$1]}"
+        fi
+    fi
+
+    jbg.qh 1
 }
