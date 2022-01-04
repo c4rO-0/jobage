@@ -1,6 +1,6 @@
 
 # varibale
-_jobage_wPath='~/.local/jobage'
+_jobage_wPath="$HOME/.local/jobage"
 _jobage_dinfo1="$_jobage_wPath/sq.dat"
 _jobage_dinfo2="$_jobage_wPath/sq-1.dat"
 
@@ -26,7 +26,7 @@ if [ ! -d "$_jobage_wPath" ]; then
 fi
 
 # detect cluster scheduling system
-if [ -x "$(command -v bqueue)" ]; then
+if [ -x "$(command -v bqueues)" ]; then
     _jobage_system='lsf'
     _jobage_is_lsf='y'
     source "$_jobage_srcPath/src/lsf.fuc.sh";
