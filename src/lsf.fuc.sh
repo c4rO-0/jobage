@@ -87,15 +87,15 @@ function _jobage_lsf_cancel()
     if [[ $SHELL ==  *"/bash" ]]; then
 
         if [ "$#" -eq 0 ]; then
-            bkill ${array_jobID[0]}
+            bkill ${_jobage_array_jobID[0]}
         else
-            bkill ${array_jobID[$1-1]}
+            bkill ${_jobage_array_jobID[$1-1]}
         fi
     else
         if [ "$#" -eq 0 ]; then
-            bkill ${array_jobID[1]}
+            bkill ${_jobage_array_jobID[1]}
         else
-            bkill ${array_jobID[$1]}
+            bkill ${_jobage_array_jobID[$1]}
         fi	
     fi
 
@@ -123,8 +123,10 @@ function _jobage_lsf_cancel_all()
 
 }
 
-
-function _jobage_lsf_cancel_grep()
+# !!!!!!!!!!!!!!!!!!!!!!!!!!
+# FIXME
+# ==========================
+function _working_jobage_lsf_cancel_grep()
 {
     jobInfo=$(bq| grep "$@")
 
