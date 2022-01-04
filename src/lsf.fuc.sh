@@ -102,6 +102,7 @@ function _jobage_lsf_cancel()
 }
 
 function _jobage_lsf_cancel_all()
+{
 
     echo 'Will cancel all jobs !!!'
     echo '-------------------'
