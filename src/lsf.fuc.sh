@@ -138,11 +138,11 @@ function _working_jobage_lsf_cancel_grep()
     IFS=
     while read -r iJobInfo;
     do 
-	echo $iJobInfo
-	iJobNum=$(echo $iJobInfo | awk '{print $5}') 
-	# scancelJob $i;
-	# debug
-	echo 'cancel ' $iJobNum
+        echo $iJobInfo
+        iJobNum=$(echo $iJobInfo | awk '{print $5}') 
+        # scancelJob $i;
+        # debug
+        echo 'cancel '  "$iJobNum"
     done < <(printf '%s\n' "$jobInfo")
     IFS="$OLD_IFS"
 
