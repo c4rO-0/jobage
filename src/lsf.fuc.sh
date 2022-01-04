@@ -1,16 +1,16 @@
 
 
-_jobage_fuc_srcPath=''
+_jobage_lsf_fuc_srcPath=''
 
 # detect PATH
 if [[ $SHELL == *"/bash" ]]; then
-    _jobage_fuc_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
+    _jobage_lsf_fuc_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 else
-    _jobage_fuc_srcPath=$(dirname $(readlink -f "$0"))
+    _jobage_lsf_fuc_srcPath=$(dirname $(readlink -f "$0"))
 fi
 
 # basic func
-source "$_jobage_fuc_srcPath/core.fuc.sh"
+source "$_jobage_lsf_fuc_srcPath/core.fuc.sh"
 
 function _jobage_lsf_raw() {
     # help

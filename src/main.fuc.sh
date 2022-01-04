@@ -1,4 +1,21 @@
 
+
+_jobage_main_fuc_srcPath=''
+
+# detect PATH
+if [[ $SHELL == *"/bash" ]]; then
+    _jobage_main_fuc_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
+else
+    _jobage_main_fuc_srcPath=$(dirname $(readlink -f "$0"))
+fi
+
+if [[ "$_jobage_system" == 'lsf' ]]; then
+    source "$_jobage_main_fuc_srcPath/lsf.fuc.sh"
+elif [[ "$_jobage_system" == 'slurm' ]]; then
+    echo "wating slurm"
+fi  
+
+
 function _jobage_queue_display() {
     
     outType='all'
@@ -50,6 +67,7 @@ function _jobage_queue_display() {
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
 }
+
 
 function _jobage_queue_history_display()
 {
@@ -167,7 +185,7 @@ _jobage_cd()
     fi
 
     _jobage_queue_history_display 1
-}
+}  
 
 # function list
 
