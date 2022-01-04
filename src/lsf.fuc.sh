@@ -16,7 +16,7 @@ function _jobage_lsf_raw() {
     # help
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo '|-get job raw info'
-        exit 0
+        return
     fi
 
     info=$(bjobs -u $USER -o "jobid:7 queue:10 job_name:20 stat:5 run_time exec_host:12 sub_cwd")

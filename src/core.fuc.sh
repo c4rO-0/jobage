@@ -4,7 +4,7 @@ function _jobage_displaytime {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo '|-converget seconds to readable time.'
         echo '|-displaytime seconds'
-        exit 0
+        return
     fi
 
     local T=$1

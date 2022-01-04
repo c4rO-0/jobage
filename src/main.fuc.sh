@@ -175,7 +175,7 @@ jbg.q()
 {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo '|-display queue infomation.'
-        exit 0
+        return
     fi
 
     if [[ "$_jobage_system" == 'lsf' ]]; then
@@ -191,7 +191,7 @@ jbg.qrun()
 {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo '|-only display running queue infomation.'
-        exit 0
+        return
     fi
 
     if [[ "$_jobage_system" == 'lsf' ]]; then
@@ -212,7 +212,7 @@ jbg.kill() {
         echo '|-- kill jobs in which job name or working path contains str'
         echo '|-kill [all]'
         echo '|-- kill all jobs '
-        exit 0
+        return
     fi
     if [ "$1" == "grep" ]; then
         
@@ -246,7 +246,7 @@ jbg.kill() {
 jbg.qh() {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo '|-show the last two queue informantion.'
-        exit 0
+        return
     fi
 
     _jobage_queue_history_display "$@"
