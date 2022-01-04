@@ -187,6 +187,69 @@ _jobage_cd()
     _jobage_queue_history_display 1
 }  
 
+
+_jobage_kill_index() {
+    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+        echo '|-kill spicific job.'
+        echo '|-kill [id]'
+        echo '|-- kill the job with the [id]. [id] is the index shwon in jbg.q '
+        return
+    fi
+
+    if [[ "$_jobage_system" == 'lsf' ]]; then
+        _jobage_lsf_cancel "$@"
+    elif [[ "$_jobage_system" == 'slurm' ]]; then
+        echo "wating slurm"
+    fi
+
+    
+}
+
+_jobage_kill_grep() {
+
+    jobInfo=$(_jobage_queue_display | grep "$@")
+
+#    for iJobInfo in $(echo $jobInfo); 
+    
+    echo 'Will cancel following jobs :'
+
+    OLD_IFS="$IFS"
+    IFS=
+    while read -r iJobInfo;
+    do 
+        echo $iJobInfo
+        # iJobNum=$(echo $iJobInfo | awk '{print $5}') 
+        # # scancelJob $i;
+        # # debug
+        # echo 'cancel '  "$iJobNum"
+    done < <(printf '%s\n' "$jobInfo")
+    IFS="$OLD_IFS"
+
+    echo '-------------------'
+    echo '| comfirm : y/n ?'
+
+    read comfirm
+    if [[ $comfirm == 'y' ]];then
+        echo 'comfirm. cancling...'
+        OLD_IFS="$IFS"
+        IFS=
+        while IFS= read -r iJobInfo;
+        do 
+            # echo '| ', $iJobInfo
+            iJobNum=$(echo $iJobInfo | awk '{print $5}') 
+            _jobage_kill_index $iJobNum;
+            # echo $iJobNum;
+        done < <(printf '%s\n' "$jobInfo")
+        IFS="$OLD_IFS"
+
+	    echo 'done.'
+    else
+	    echo 'not comfirm'
+    fi
+
+}
+
+
 # function list
 
 jbg.q() 
@@ -221,6 +284,7 @@ jbg.qrun()
     _jobage_queue_display "run" "$@"
 }
 
+
 jbg.kill() {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
         echo '|-kill spicific job.'
@@ -235,7 +299,7 @@ jbg.kill() {
     if [ "$1" == "grep" ]; then
         
         if [[ "$_jobage_system" == 'lsf' ]]; then
-            _jobage_lsf_cancel_grep "${@:2}"
+            _jobage_kill_grep "${@:2}"
         elif [[ "$_jobage_system" == 'slurm' ]]; then
             echo "wating slurm"
         fi
@@ -248,18 +312,12 @@ jbg.kill() {
         fi
 
     else
-        
-        if [[ "$_jobage_system" == 'lsf' ]]; then
-            _jobage_lsf_cancel "$@"
-        elif [[ "$_jobage_system" == 'slurm' ]]; then
-            echo "wating slurm"
-        fi
+        _jbg_kill_index "$@"
+
 
     fi
     
 }
-
-
 
 jbg.qh() {
     if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
