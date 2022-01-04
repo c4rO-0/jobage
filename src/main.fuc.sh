@@ -154,15 +154,15 @@ jbg.cd()
 {
     if [[ $SHELL ==  *"/bash" ]]; then
         if [ "$#" -eq 0 ]; then
-            cd "${array_jobDir[0]}"
+            cd "${_jobage_array_jobDir[0]}"
         else
-            cd "${array_jobDir[$1-1]}"
+            cd "${_jobage_array_jobDir[$1-1]}"
         fi
     else
         if [ "$#" -eq 0 ]; then
-            cd "${array_jobDir[1]}"
+            cd "${_jobage_array_jobDir[1]}"
         else
-            cd "${array_jobDir[$1]}"
+            cd "${_jobage_array_jobDir[$1]}"
         fi
     fi
 

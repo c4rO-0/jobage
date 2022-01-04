@@ -126,7 +126,7 @@ function _jobage_lsf_cancel_all()
 
 function _jobage_lsf_cancel_grep()
 {
-    jobInfo=$(bq| grep $@)
+    jobInfo=$(bq| grep "$@")
 
 #    for iJobInfo in $(echo $jobInfo); 
     
