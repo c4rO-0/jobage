@@ -47,34 +47,34 @@ function _jobage_lsf_save_queue() {
     
     timestampNow=$(date +%s)
 
-    if [ -f "$_jobage_dinfo" ] && [ -s "$_jobage_dinfo" ]; then
-        if [ -f "$_jobage_dinfo1" ] && [ -s "$_jobage_dinfo1" ]; then
-            timestampPre=$(head -n1 "$_jobage_dinfo1" | awk '{print $7}')
+    if [ -f "$_jobage_dinfo1" ] && [ -s "$_jobage_dinfo1" ]; then
+        if [ -f "$_jobage_dinfo2" ] && [ -s "$_jobage_dinfo2" ]; then
+            timestampPre=$(head -n1 "$_jobage_dinfo2" | awk '{print $7}')
             # echo $timestampNow $timestampPre 
             # echo $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc )
             if [[ $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc ) -eq 1 ]]; then
-            cp "$_jobage_dinfo" "$_jobage_dinfo1"
+            cp "$_jobage_dinfo1" "$_jobage_dinfo2"
             fi
             # echo 'cp end'
         else
-            cp "$_jobage_dinfo" "$_jobage_dinfo1"
+            cp "$_jobage_dinfo1" "$_jobage_dinfo2"
         fi
     fi
 
     jobs=$(_jobage_lsf_raw | tail -n +2 | sort -k 2n)
 
-    { { date ; echo " " $timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo"
+    { { date ; echo " " $timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo1"
     
     # echo "debug:--->"
     # cat ~/.local/sq.dat
     # echo "debug---|"
-    echo "----------" >> "$_jobage_dinfo"
+    echo "----------" >> "$_jobage_dinfo1"
 
-    printf "%6s %10s %11s %10s %3s %8s %8s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODES" "WORK_DIR" >>  "$_jobage_dinfo"
+    printf "%6s %10s %11s %10s %3s %8s %8s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODES" "WORK_DIR" >>  "$_jobage_dinfo1"
     # echo "$jobs" | nl -v 1
     
     _jobage_array_jobDir=($(echo "$jobs" | awk '{print $7}'))
     _jobage_array_jobID=($(echo "$jobs" | awk '{print $1}'))
 
-    echo "$jobs" | nl -v 1 | sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g' | sed 's/\$HOME/~/g' >> "$_jobage_dinfo"
+    echo "$jobs" | nl -v 1 | sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g' | sed 's/\$HOME/~/g' >> "$_jobage_dinfo1"
 }

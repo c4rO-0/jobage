@@ -47,7 +47,7 @@ function _jobage_queue() {
                 fi
             fi
         fi
-    done < "$_jobage_dinfo"
+    done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
 }
 
@@ -94,7 +94,7 @@ function _jobage_queue_history()
             else
             echo '|#' $line
             fi
-        done < "$_jobage_dinfo1"
+        done < "$_jobage_dinfo2"
         IFS="$OLD_IFS"
     fi
 
@@ -144,7 +144,7 @@ function _jobage_queue_history()
 	else
 	    echo '|#' $line
 	fi
-    done < "$_jobage_dinfo"
+    done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
 
 }
