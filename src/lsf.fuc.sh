@@ -111,7 +111,7 @@ function _jobage_lsf_cancel_all()
     if [[ $comfirm == 'y' ]];then
         echo 'comfirm. cancling...'
 
-        for i in $(bjobs | grep $(whoami) | awk '{print $1}');
+        for i in $(bjobs | grep "$USER" | awk '{print $1}');
         do
             bkill $i;
         done
@@ -128,7 +128,7 @@ function _jobage_lsf_cancel_all()
 # ==========================
 function _working_jobage_lsf_cancel_grep()
 {
-    jobInfo=$(bq| grep "$@")
+    jobInfo=$(grep "$@" "$_jobage_dinfo1")
 
 #    for iJobInfo in $(echo $jobInfo); 
     
