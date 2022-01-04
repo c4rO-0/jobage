@@ -181,7 +181,7 @@ jbg.q()
     if [[ "$_jobage_system" == 'lsf' ]]; then
         _jobage_lsf_save_queue "$@"
     elif [[ "$_jobage_system" == 'slurm' ]]; then
-
+        echo "wating slurm"
     fi    
 
     _jobage_queue_display "$@"
@@ -197,7 +197,7 @@ jbg.qrun()
     if [[ "$_jobage_system" == 'lsf' ]]; then
         _jobage_lsf_save_queue "$@"
     elif [[ "$_jobage_system" == 'slurm' ]]; then
-
+        echo "wating slurm"
     fi    
 
     _jobage_queue_display "run" "$@"
@@ -219,14 +219,14 @@ jbg.kill() {
         if [[ "$_jobage_system" == 'lsf' ]]; then
             _jobage_lsf_cancel_grep "${@:2}"
         elif [[ "$_jobage_system" == 'slurm' ]]; then
-
+            echo "wating slurm"
         fi
     elif [ "$1" == "all" ]; then
         
         if [[ "$_jobage_system" == 'lsf' ]]; then
             _jobage_lsf_cancel_all "$@"
         elif [[ "$_jobage_system" == 'slurm' ]]; then
-
+            echo "wating slurm"
         fi
 
     else
@@ -234,7 +234,7 @@ jbg.kill() {
         if [[ "$_jobage_system" == 'lsf' ]]; then
             _jobage_lsf_cancel "$@"
         elif [[ "$_jobage_system" == 'slurm' ]]; then
-
+            echo "wating slurm"
         fi
 
     fi
