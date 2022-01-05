@@ -1,7 +1,7 @@
 # basic func
 function _jobage_displaytime {
     # help
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo '|-converget seconds to readable time.'
         echo '|-displaytime seconds'
         return

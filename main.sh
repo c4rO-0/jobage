@@ -32,7 +32,7 @@ elif [ -x "$(command -v squeue)" ]; then
     _jobage_system='slurm'
 fi
 
-if [ ! "$_jobage_system" == '' ]; then
+if [[ ! "$_jobage_system" == '' ]]; then
     # echo "found " "$_jobage_system"
     source "$_jobage_srcPath/src/main.fuc.sh";
 fi

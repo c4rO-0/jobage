@@ -37,7 +37,7 @@ source "$_jobage_lsf_fuc_srcPath/core.fuc.sh"
 
 function _jobage_lsf_raw() {
     # help
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo '|-get job raw info'
         return
     fi

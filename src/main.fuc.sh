@@ -189,7 +189,7 @@ _jobage_cd()
 
 
 _jobage_kill_index() {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo '|-kill spicific job.'
         echo '|-kill [id]'
         echo '|-- kill the job with the [id]. [id] is the index shwon in jbg.q '
@@ -271,7 +271,7 @@ jbg.help()
 
 jbg.q() 
 {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo '|-display queue infomation.'
         return
     fi
@@ -287,7 +287,7 @@ jbg.q()
 
 jbg.qrun() 
 {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo '|-only display running queue infomation.'
         return
     fi
@@ -303,7 +303,7 @@ jbg.qrun()
 
 
 jbg.kill() {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo '|-kill spicific job.'
         echo '|-kill [id]'
         echo '|-- kill the job with the [id]. [id] is the index shwon in jbg.q '
@@ -313,7 +313,7 @@ jbg.kill() {
         echo '|-- kill all jobs '
         return
     fi
-    if [ "$1" == "grep" ]; then
+    if [[ "$1" == "grep" ]]; then
         
         if [[ "$_jobage_system" == 'lsf' ]]; then
             _jobage_kill_grep "${@:2}"
@@ -337,7 +337,7 @@ jbg.kill() {
 }
 
 jbg.qh() {
-    if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo '|-show the last two queue informantion.'
         return
     fi
