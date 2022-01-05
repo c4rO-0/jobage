@@ -17,4 +17,8 @@ or
 
 add `source main.sh` to `~/.bashrc`
 
-## 
+## usage
+
+1. all commands start with jbg.XXX
+2. run jbg.help to get a summary help information
+3. run jbg.XXX -h get a help information for the command XXX.
