@@ -28,32 +28,38 @@ function _jobage_queue_display() {
 	    nline=$((nline+1))
         if (( nline > 2 ));then
             strStart='*'
-            if [[ $line == *\ "$cPath" ]]; then
+            if [[ "$line" == *\ "$cPath" ]]; then
                 strStart='\033[96;104m>\033[0m'
                 # echo 'find cPath'
             fi
 
             if [[ "$outType" == "all" ]]; then
                 if (( nline == 3 ));then
-                    echo -e $strStart" == " $line; 
-                elif [[ $(echo $line | awk '{print $5}') == 'RUN' ]]; then 
-                    echo -e $strStart"\033[32m >> \033[0m" $line; 
-                elif [[ $(echo $line | awk '{print $5}') == 'CG' ]]; then
-                    echo -e $strStart"\033[33m >< \033[0m" $line; 
-                else 
-                    echo -e $strStart"\033[33m == \033[0m" $line; 
+                    echo -e $strStart" == " "$line"; 
+                else
+                    strStatus=$(echo "$line" | awk '{print $5}')
+                    if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                        echo -e $strStart"\033[32m >> \033[0m" $line; 
+                    elif [[ "$strStatus" == 'CG' ]]; then
+                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                    else 
+                        echo -e $strStart"\033[33m == \033[0m" $line; 
+                    fi
                 fi
                 echo '+----'
             else
                 if (( nline == 3 ));then
                     echo -e $strStart" == " $line; 
                     echo '+----'
-                elif [[ $(echo $line | awk '{print $5}') == 'RUN' ]]; then 
-                    echo -e $strStart"\033[32m >> \033[0m" $line; 
-                    echo '+----'
-                elif [[ $(echo $line | awk '{print $5}') == 'CG' ]]; then
-                    echo -e $strStart"\033[33m >< \033[0m" $line; 
-                    echo '+----'
+                else
+                    strStatus=$(echo "$line" | awk '{print $5}')
+                    if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                        echo -e $strStart"\033[32m >> \033[0m" $line; 
+                        echo '+----'
+                    elif [[ "$strStatus" == 'CG' ]]; then
+                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                        echo '+----'
+                    fi
                 fi
             fi
         fi
@@ -93,12 +99,15 @@ function _jobage_queue_history_display()
             fi
             if (( nline == 3 ));then
                 echo -e $strStart" == " $line; 
-            elif [[ $(echo $line | awk '{print $5}') == 'RUN' ]]; then 
-                echo -e $strStart"\033[32m >> \033[0m" $line; 
-            elif [[ $(echo $line | awk '{print $5}') == 'CG' ]]; then
-                echo -e $strStart"\033[33m >< \033[0m" $line; 
-            else 
-                echo -e $strStart"\033[33m == \033[0m" $line; 
+            else
+                strStatus=$(echo "$line" | awk '{print $5}')
+                if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                    echo -e $strStart"\033[32m >> \033[0m" $line; 
+                elif [[ "$strStatus" == 'CG' ]]; then
+                    echo -e $strStart"\033[33m >< \033[0m" $line; 
+                else 
+                    echo -e $strStart"\033[33m == \033[0m" $line; 
+                fi
             fi
             # echo '|*' $line
             echo '+----'
@@ -127,26 +136,32 @@ function _jobage_queue_history_display()
         if (( $hline == 1 )); then
             if [[ $line == *\ "$cPath" ]]; then
                 if (( nline == 3 ));then
-                echo -e $strStart" == " $line; 
-                elif [[ $(echo $line | awk '{print $5}') == 'RUN' ]]; then 
-                echo -e $strStart"\033[32m >> \033[0m" $line; 
-                elif [[ $(echo $line | awk '{print $5}') == 'CG' ]]; then
-                echo -e $strStart"\033[33m >< \033[0m" $line; 
-                else 
-                echo -e $strStart"\033[33m == \033[0m" $line; 
+                    echo -e $strStart" == " $line; 
+                else
+                    strStatus=$(echo "$line" | awk '{print $5}')
+                    if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                        echo -e $strStart"\033[32m >> \033[0m" $line; 
+                    elif [[ "$strStatus" == 'CG' ]]; then
+                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                    else 
+                        echo -e $strStart"\033[33m == \033[0m" $line; 
+                    fi
                 fi
                 # echo '|*' $line
                 echo '+----'
             fi
         else
             if (( nline == 3 ));then
-            echo -e $strStart" == " $line; 
-            elif [[ $(echo $line | awk '{print $5}') == 'RUN' ]]; then 
-            echo -e $strStart"\033[32m >> \033[0m" $line; 
-            elif [[ $(echo $line | awk '{print $5}') == 'CG' ]]; then
-            echo -e $strStart"\033[33m >< \033[0m" $line; 
-            else 
-            echo -e $strStart"\033[33m == \033[0m" $line; 
+                echo -e $strStart" == " $line; 
+            else
+                strStatus=$(echo "$line" | awk '{print $5}')
+                if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                    echo -e $strStart"\033[32m >> \033[0m" $line; 
+                elif [[ "$strStatus" == 'CG' ]]; then
+                    echo -e $strStart"\033[33m >< \033[0m" $line; 
+                else 
+                    echo -e $strStart"\033[33m == \033[0m" $line; 
+                fi
             fi
             # echo '|*' $line
             echo '+----'
@@ -204,14 +219,14 @@ _jobage_kill_grep() {
     echo '| confirm : y/n ?'
 
     read confirm
-    if [[ $confirm == 'y' ]];then
+    if [[ "$confirm" == 'y' ]];then
         echo 'confirm. cancling...'
         OLD_IFS="$IFS"
         IFS=
         while IFS= read -r iJobInfo;
         do 
             # echo '| ', $iJobInfo
-            iJobNum=$(echo $iJobInfo | awk '{print $4}') 
+            iJobNum=$(echo "$iJobInfo" | awk '{print $4}') 
             _jobage_cancel_index "$iJobNum";
             # echo $iJobNum;
         done < <(printf '%s\n' "$jobInfo")
