@@ -1,4 +1,27 @@
-
+# ----------------------------------------------
+# |rules for cluster scheduling system
+# ----------------------------------------------
+#-| gloable varible :
+# |
+#-|- local varible :
+# |  | _jobage_[name]_xx
+#-| fuction name rule:
+# | _jobage_[name]_XX
+#-| XX list:
+# |- save_queue(none) [none]
+# |  | save job queue info into files:
+# |  | "$_jobage_dinfo1" and "$_jobage_dinfo2"
+# |  | format : 
+# |  | *1* date
+# |  | *2* ----------
+# |  | *3* num      JOBID   PARTITION       NAME  ST         TIME            NODES WORK_DIR
+# |  | *4* num      JOBID   PARTITION       NAME  status     runging time    NODES [working directory]
+# |  | save job queue info into array: _jobage_array_jobDir _jobage_array_jobID
+# |- cancel(num) [none]
+# |  | cancel job with index [num]
+# |- cancel_all(none) [none]
+# |  | cancel all jobs
+# ----------------------------------------------
 
 _jobage_lsf_fuc_srcPath=''
 

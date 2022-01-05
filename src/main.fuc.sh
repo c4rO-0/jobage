@@ -251,6 +251,23 @@ _jobage_kill_grep() {
 
 
 # function list
+jbg.help() 
+{
+    echo "| a job-management tool for cluster scheduling systems."
+    echo '| author   : C4r-bs'
+    echo '| homepage : https://gitee.com/C4r/jobage'
+    echo '| --------'
+    echo '| command list :'
+    echo '| .q      | display queue infomation.'
+    echo '| .qrun   | display running queue infomation.'
+    echo '| .qh     | display last two queue infomation.'
+    echo '| - - - - '
+    echo '| .kill   | kill specific jobs by index/grep/all.'
+    echo '| .cd     | go to the working dirctory of job.'
+    echo '| - - - - '
+    echo '| run .any -h/--help to get the help information for any command.' 
+    echo '| --------'
+}
 
 jbg.q() 
 {
