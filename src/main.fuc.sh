@@ -9,13 +9,6 @@ else
     _jobage_main_fuc_srcPath=$(dirname $(readlink -f "$0"))
 fi
 
-if [[ "$_jobage_system" == 'lsf' ]]; then
-    source "$_jobage_main_fuc_srcPath/lsf.fuc.sh"
-elif [[ "$_jobage_system" == 'slurm' ]]; then
-    echo "wating slurm"
-fi  
-
-
 function _jobage_queue_display() {
     
     outType='all'
@@ -187,24 +180,6 @@ _jobage_cd()
     _jobage_queue_history_display 1
 }  
 
-
-_jobage_kill_index() {
-    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
-        echo '|-kill spicific job.'
-        echo '|-kill [id]'
-        echo '|-- kill the job with the [id]. [id] is the index shwon in jbg.q '
-        return
-    fi
-
-    if [[ "$_jobage_system" == 'lsf' ]]; then
-        _jobage_lsf_cancel "$@"
-    elif [[ "$_jobage_system" == 'slurm' ]]; then
-        echo "wating slurm"
-    fi
-
-    
-}
-
 _jobage_kill_grep() {
 
     jobInfo=$(_jobage_queue_display | grep "$@")
@@ -237,7 +212,7 @@ _jobage_kill_grep() {
         do 
             # echo '| ', $iJobInfo
             iJobNum=$(echo $iJobInfo | awk '{print $4}') 
-            _jobage_kill_index $iJobNum;
+            _jobage_cancel_index "$iJobNum";
             # echo $iJobNum;
         done < <(printf '%s\n' "$jobInfo")
         IFS="$OLD_IFS"
@@ -276,11 +251,7 @@ jbg.q()
         return
     fi
 
-    if [[ "$_jobage_system" == 'lsf' ]]; then
-        _jobage_lsf_save_queue "$@"
-    elif [[ "$_jobage_system" == 'slurm' ]]; then
-        echo "wating slurm"
-    fi    
+    _jobage_save_queue "$@"    
 
     _jobage_queue_display "$@"
 }
@@ -292,11 +263,7 @@ jbg.qrun()
         return
     fi
 
-    if [[ "$_jobage_system" == 'lsf' ]]; then
-        _jobage_lsf_save_queue "$@"
-    elif [[ "$_jobage_system" == 'slurm' ]]; then
-        echo "wating slurm"
-    fi    
+    _jobage_save_queue "$@"
 
     _jobage_queue_display "run" "$@"
 }
@@ -314,22 +281,11 @@ jbg.kill() {
         return
     fi
     if [[ "$1" == "grep" ]]; then
-        
-        if [[ "$_jobage_system" == 'lsf' ]]; then
-            _jobage_kill_grep "${@:2}"
-        elif [[ "$_jobage_system" == 'slurm' ]]; then
-            echo "wating slurm"
-        fi
+        _jobage_kill_grep "${@:2}"
     elif [ "$1" == "all" ]; then
-        
-        if [[ "$_jobage_system" == 'lsf' ]]; then
-            _jobage_lsf_cancel_all "$@"
-        elif [[ "$_jobage_system" == 'slurm' ]]; then
-            echo "wating slurm"
-        fi
-
+        _jobage_cancel_all "$@"
     else
-        _jbg_kill_index "$@"
+        _jobage_cancel_index "$@"
 
 
     fi
@@ -347,5 +303,10 @@ jbg.qh() {
 
 jbg.cd()
 {
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+        echo '|-go to the work dirctory of job.'
+        echo '|-cd [num]'
+        return
+    fi
     _jobage_cd "$@"
 }

@@ -23,6 +23,10 @@
 # |  | cancel all jobs
 # ----------------------------------------------
 
+# =====================================
+# start here
+# -------------------------------------
+
 _jobage_lsf_fuc_srcPath=''
 
 # detect PATH
@@ -144,4 +148,24 @@ function _jobage_lsf_cancel_all()
 	    echo 'not confirm'
     fi
 
+}
+
+# -------------------------------------
+# end here
+# =====================================
+
+# public and unique function list
+function _jobage_save_queue()
+{
+    _jobage_lsf_save_queue "$@"
+}
+
+function _jobage_cancel_index()
+{
+    _jobage_lsf_cancel "$@"
+}
+
+function _jobage_cancel_all()
+{
+    _jobage_lsf_cancel_all "$@"
 }
