@@ -8,6 +8,14 @@ author : C4r-bs
 
 ---
 
+## progress 
+
+|       | bash | zsh |
+|-------|------|-----|
+| lsf   | o    | o   |
+| slurm | -    | -   |
+
+
 ## install
 
 ```
