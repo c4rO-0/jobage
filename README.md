@@ -13,7 +13,7 @@ author : C4r-bs
 |       | bash | zsh |
 |-------|------|-----|
 | lsf   | o    | o   |
-| slurm | -    | -   |
+| slurm | *    | *   |
 
 
 ## install

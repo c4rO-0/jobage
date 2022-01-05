@@ -52,80 +52,76 @@ _jobage_slurm_save_queue()
 
     timestampNow=$(date +%s)
 
-    if [ -f ~/.local/sq.dat ] && [ -s ~/.local/sq.dat ]; then
-	if [ -f ~/.local/sq-1.dat ] && [ -s ~/.local/sq-1.dat ]; then
-	    timestampPre=$(head -n1 ~/.local/sq-1.dat | awk '{print $7}')
-	    # echo $timestampNow $timestampPre 
-	    # echo $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc )
-	    if [[ $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc ) -eq 1 ]]; then
-		cp ~/.local/sq.dat ~/.local/sq-1.dat
-	    fi
-	    # echo 'cp end'
-	else
-	    cp ~/.local/sq.dat ~/.local/sq-1.dat
-	fi
+    if [ -f "$_jobage_dinfo1" ] && [ -s "$_jobage_dinfo1" ]; then
+        if [ -f "$_jobage_dinfo2" ] && [ -s "$_jobage_dinfo2" ]; then
+            timestampPre=$(head -n1 "$_jobage_dinfo2" | awk '{print $7}')
+            # echo $timestampNow $timestampPre 
+            # echo $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc )
+            if [[ $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc ) -eq 1 ]]; then
+            cp "$_jobage_dinfo1" "$_jobage_dinfo2"
+            fi
+            # echo 'cp end'
+        else
+            cp "$_jobage_dinfo1" "$_jobage_dinfo2"
+        fi
     fi
 
-    jobs=$(squeue -u shengbi -o "%.10i %.9P %.12j %.2t %.10M %.5D %.Z" | tail -n +2 | sort -k 2n)
+    jobs=$(squeue -u "$USER" -o "%.10i %.9P %.12j %.2t %.10M %.5D %.Z" | tail -n +2 | sort -k 2n)
 
-    { { date ; echo " " $timestampNow ;}  | tr -d '\n' ; echo ; } > ~/.local/sq.dat
+    { { date ; echo " " $timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo1"
     
     # echo "debug:--->"
     # cat ~/.local/sq.dat
     # echo "debug---|"
-    echo "----------" >> ~/.local/sq.dat
+    echo "----------" >> "$_jobage_dinfo1"
 
-    printf "%6s %10s %11s %10s %3s %8s %8s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODES" "WORK_DIR" >>  ~/.local/sq.dat
+    printf "%6s %10s %11s %10s %3s %8s %8s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODES" "WORK_DIR" >>  "$_jobage_dinfo1"
     # echo "$jobs" | nl -v 1
     
-    array_jobDir=($(echo "$jobs" | awk '{print $7}'))
-    array_jobID=($(echo "$jobs" | awk '{print $1}'))
+    _jobage_array_jobDir=($(echo "$jobs" | awk '{print $7}'))
+    _jobage_array_jobID=($(echo "$jobs" | awk '{print $1}'))
 
-    echo "$jobs" | nl -v 1 | sed 's/\/.*\/shengbi/~/g' | sed 's/\/\.\///g' >> ~/.local/sq.dat
+    echo "$jobs" | nl -v 1 | sed 's/\/.*\/shengbi/~/g' | sed 's/\/\.\///g' >> "$_jobage_dinfo1"
     
-    cPath=$(pwd| sed 's/\/.*\/shengbi/~/g' | sed 's/\/\.\///g')
-
-    OLD_IFS="$IFS"
-    IFS=
-    nline=0
-    while read line
-    do
-	    nline=$((nline+1))
-        if (( nline > 2 ));then
-            strStart='*'
-            if [[ $line == *\ "$cPath" ]]; then
-                strStart='\033[96;104m>\033[0m'
-                # echo 'find cPath'
-            fi
-
-            if [[ "$outType" == "all" ]]; then
-                if (( nline == 3 ));then
-                    echo -e $strStart" == " $line; 
-                elif [[ $(echo $line | awk '{print $5}') == 'R' ]]; then 
-                    echo -e $strStart"\033[32m >> \033[0m" $line; 
-                elif [[ $(echo $line | awk '{print $5}') == 'CG' ]]; then
-                    echo -e $strStart"\033[33m >< \033[0m" $line; 
-                else 
-                    echo -e $strStart"\033[33m == \033[0m" $line; 
-                fi
-                echo '+----'
-            else
-                if (( nline == 3 ));then
-                    echo -e $strStart" == " $line; 
-                    echo '+----'
-                elif [[ $(echo $line | awk '{print $5}') == 'R' ]]; then 
-                    echo -e $strStart"\033[32m >> \033[0m" $line; 
-                    echo '+----'
-                elif [[ $(echo $line | awk '{print $5}') == 'CG' ]]; then
-                    echo -e $strStart"\033[33m >< \033[0m" $line; 
-                    echo '+----'
-                fi
-            fi
-        fi
-    done < ~/.local/sq.dat
-    IFS="$OLD_IFS"
 }
 
+function _jobage_slurm_cancel()
+{
+
+    if [[ $SHELL ==  *"/bash" ]]; then
+
+        if [ "$#" -eq 0 ]; then
+            scancel ${array_jobID[0]}
+        else
+            scancel ${array_jobID[$1-1]}
+        fi
+    else 
+
+        if [ "$#" -eq 0 ]; then
+            scancel ${array_jobID[1]}
+        else
+            scancel ${array_jobID[$1]}
+        fi
+    fi
+
+}
+
+function _jobage_slurm_cancel_all()
+{
+    echo 'Will cancel all jobs !!!'
+    echo '-------------------'
+    echo '| confirm : y/n ?'
+    read confirm
+    if [[ $confirm == 'y' ]];then
+        echo 'confirm. cancling...'
+
+        scancel -u "$USER"
+
+	    echo 'done.'
+    else
+	    echo 'not confirm'
+    fi
+}
 
 # -------------------------------------
 # end here

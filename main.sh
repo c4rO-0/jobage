@@ -38,7 +38,7 @@ if [ -x "$(command -v bqueues)" ]; then
     source "$_jobage_srcPath/src/lsf.fuc.sh"
 elif [ -x "$(command -v squeue)" ]; then
     _jobage_system='slurm'
-    # source "$_jobage_srcPath/src/slurm.fuc.sh"
+    source "$_jobage_srcPath/src/slurm.fuc.sh"
 fi
 
 if [[ ! "$_jobage_system" == '' ]]; then
