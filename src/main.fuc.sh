@@ -226,11 +226,11 @@ _jobage_kill_grep() {
     IFS="$OLD_IFS"
 
     echo '-------------------'
-    echo '| comfirm : y/n ?'
+    echo '| confirm : y/n ?'
 
-    read comfirm
-    if [[ $comfirm == 'y' ]];then
-        echo 'comfirm. cancling...'
+    read confirm
+    if [[ $confirm == 'y' ]];then
+        echo 'confirm. cancling...'
         OLD_IFS="$IFS"
         IFS=
         while IFS= read -r iJobInfo;
@@ -244,7 +244,7 @@ _jobage_kill_grep() {
 
 	    echo 'done.'
     else
-	    echo 'not comfirm'
+	    echo 'not confirm'
     fi
 
 }

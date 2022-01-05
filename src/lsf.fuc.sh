@@ -129,10 +129,10 @@ function _jobage_lsf_cancel_all()
 
     echo 'Will cancel all jobs !!!'
     echo '-------------------'
-    echo '| comfirm : y/n ?'
-    read comfirm
-    if [[ $comfirm == 'y' ]];then
-        echo 'comfirm. cancling...'
+    echo '| confirm : y/n ?'
+    read confirm
+    if [[ $confirm == 'y' ]];then
+        echo 'confirm. cancling...'
 
         for i in $(bjobs | grep "$USER" | awk '{print $1}');
         do
@@ -141,7 +141,7 @@ function _jobage_lsf_cancel_all()
 
 	    echo 'done.'
     else
-	    echo 'not comfirm'
+	    echo 'not confirm'
     fi
 
 }
