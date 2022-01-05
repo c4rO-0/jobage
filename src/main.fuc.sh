@@ -84,57 +84,79 @@ function _jobage_queue_history_display()
     if (( $hline == 2 )); then
         printf "%s\n" "==============="
         # cat ~/.local/sq-1.dat
+        if [[ ! -f "$_jobage_dinfo2" ]];then
+            echo "jobage queue the first information not found."
+        else
+            OLD_IFS="$IFS"
+            IFS=
+            nline=0
+            while read line
+            do
+                nline=$((nline+1))
+                if (( $nline > 2 ));then
+                strStart='*'
+                if [[ $line == *\ "$cPath" ]]; then
+                    strStart='\033[96;104m>\033[0m'
+                    # echo 'find cPath'
+                fi
+                if (( nline == 3 ));then
+                    echo -e $strStart" == " $line; 
+                else
+                    strStatus=$(echo "$line" | awk '{print $5}')
+                    if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                        echo -e $strStart"\033[32m >> \033[0m" $line; 
+                    elif [[ "$strStatus" == 'CG' ]]; then
+                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                    else 
+                        echo -e $strStart"\033[33m == \033[0m" $line; 
+                    fi
+                fi
+                # echo '|*' $line
+                echo '+----'
+                else
+                echo '|#' $line
+                fi
+            done < "$_jobage_dinfo2"
+            IFS="$OLD_IFS"
+        fi
+    fi
 
+    printf "%s\n" "==============="
+    if [[ ! -f "$_jobage_dinfo1" ]];then
+        echo "jobage queue the second information not found."
+    else
+        # cat ~/.local/sq.dat
         OLD_IFS="$IFS"
         IFS=
         nline=0
         while read line
         do
-            nline=$((nline+1))
-            if (( $nline > 2 ));then
+        nline=$((nline+1))
+        if (( $nline > 2 ));then
             strStart='*'
             if [[ $line == *\ "$cPath" ]]; then
-                strStart='\033[96;104m>\033[0m'
-                # echo 'find cPath'
+            strStart='\033[96;104m>\033[0m'
+            # echo 'find cPath'
             fi
-            if (( nline == 3 ));then
-                echo -e $strStart" == " $line; 
-            else
-                strStatus=$(echo "$line" | awk '{print $5}')
-                if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                    echo -e $strStart"\033[32m >> \033[0m" $line; 
-                elif [[ "$strStatus" == 'CG' ]]; then
-                    echo -e $strStart"\033[33m >< \033[0m" $line; 
-                else 
-                    echo -e $strStart"\033[33m == \033[0m" $line; 
+
+            if (( $hline == 1 )); then
+                if [[ $line == *\ "$cPath" ]]; then
+                    if (( nline == 3 ));then
+                        echo -e $strStart" == " $line; 
+                    else
+                        strStatus=$(echo "$line" | awk '{print $5}')
+                        if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                            echo -e $strStart"\033[32m >> \033[0m" $line; 
+                        elif [[ "$strStatus" == 'CG' ]]; then
+                            echo -e $strStart"\033[33m >< \033[0m" $line; 
+                        else 
+                            echo -e $strStart"\033[33m == \033[0m" $line; 
+                        fi
+                    fi
+                    # echo '|*' $line
+                    echo '+----'
                 fi
-            fi
-            # echo '|*' $line
-            echo '+----'
             else
-            echo '|#' $line
-            fi
-        done < "$_jobage_dinfo2"
-        IFS="$OLD_IFS"
-    fi
-
-    printf "%s\n" "==============="
-    # cat ~/.local/sq.dat
-    OLD_IFS="$IFS"
-    IFS=
-    nline=0
-    while read line
-    do
-	nline=$((nline+1))
-	if (( $nline > 2 ));then
-	    strStart='*'
-	    if [[ $line == *\ "$cPath" ]]; then
-		strStart='\033[96;104m>\033[0m'
-		# echo 'find cPath'
-	    fi
-
-        if (( $hline == 1 )); then
-            if [[ $line == *\ "$cPath" ]]; then
                 if (( nline == 3 ));then
                     echo -e $strStart" == " $line; 
                 else
@@ -150,28 +172,13 @@ function _jobage_queue_history_display()
                 # echo '|*' $line
                 echo '+----'
             fi
-        else
-            if (( nline == 3 ));then
-                echo -e $strStart" == " $line; 
-            else
-                strStatus=$(echo "$line" | awk '{print $5}')
-                if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                    echo -e $strStart"\033[32m >> \033[0m" $line; 
-                elif [[ "$strStatus" == 'CG' ]]; then
-                    echo -e $strStart"\033[33m >< \033[0m" $line; 
-                else 
-                    echo -e $strStart"\033[33m == \033[0m" $line; 
-                fi
-            fi
-            # echo '|*' $line
-            echo '+----'
-        fi
 
-	else
-	    echo '|#' $line
-	fi
-    done < "$_jobage_dinfo1"
-    IFS="$OLD_IFS"
+        else
+            echo '|#' $line
+        fi
+        done < "$_jobage_dinfo1"
+        IFS="$OLD_IFS"
+    fi
 
 }
 
