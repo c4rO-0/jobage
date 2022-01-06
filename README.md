@@ -8,6 +8,11 @@ author : C4r-bs
 
 ---
 
+## view
+
+![jbq_q](./img/jbq_q.png)
+
+
 ## progress 
 
 |       | bash | zsh  |
@@ -27,9 +32,9 @@ add `source main.sh` to `~/.bashrc`
 
 ## usage
 
-1. all commands start with jbg.XXX
-2. run jbg.help to get a summary help information
-3. run jbg.XXX -h get a help information for the command XXX.
+1. all commands run like `jbg.XXX`
+2. run `jbg.help` to get a summary help information
+3. run `jbg.XXX -h` get a help information for the command XXX.
 
 ## custom 
 
