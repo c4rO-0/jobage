@@ -166,6 +166,10 @@ function _jobage_save_queue()
 
 function _jobage_cancel_index()
 {
+    if [[ "$_jobage_debug" == 'on' ]]; then
+        echo "$_jbg_debug_title" "_jobage_cancel_index " "$@"
+    fi
+
     _jobage_lsf_cancel "$@"
 }
 
