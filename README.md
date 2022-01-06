@@ -10,10 +10,10 @@ author : C4r-bs
 
 ## progress 
 
-|       | bash | zsh |
-|-------|------|-----|
-| lsf   | o    | o   |
-| slurm | *    | *   |
+|       | bash | zsh  |
+| ----- | ---- | ---- |
+| lsf   | o    | o    |
+| slurm | o    | o    |
 
 
 ## install
