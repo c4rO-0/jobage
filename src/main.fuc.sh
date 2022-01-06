@@ -45,12 +45,13 @@ function _jobage_queue_display() {
                     if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                         echo -e $strStart"\033[32m >> \033[0m" $line;
                         n_run=$((n_run+1)) ;
-                    elif [[ "$strStatus" == 'CG' ]]; then
-                        echo -e $strStart"\033[33m >< \033[0m" $line; 
-                        n_cg=$((n_cg+1)) ;
-                    else 
+                    elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
                         echo -e $strStart"\033[33m == \033[0m" $line; 
                         n_wait=$((n_cg+1)) ;
+                    else
+                        # [[ "$strStatus" == 'CG' ]]; then
+                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                        n_cg=$((n_cg+1)) ;
                     fi
                 fi
                 n_job=$((n_job+1));
@@ -65,12 +66,13 @@ function _jobage_queue_display() {
                         echo -e $strStart"\033[32m >> \033[0m" $line; 
                         echo '+----';
                         n_run=$((n_run+1)) ;
-                    elif [[ "$strStatus" == 'CG' ]]; then
+                    elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                        n_wait=$((n_cg+1)) ;
+                    else 
+                        # [[ "$strStatus" == 'CG' ]]; then
                         echo -e $strStart"\033[33m >< \033[0m" $line; 
                         echo '+----'
                         n_cg=$((n_cg+1)) ;
-                    else
-                        n_wait=$((n_cg+1)) ;
                     fi
                 fi
                 n_job=$((n_job+1));
@@ -78,7 +80,7 @@ function _jobage_queue_display() {
         fi
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
-    echo "| total " "$n_job" " | run " "$n_run"
+    echo "| total " "$n_job" " | run " "$n_run" " | warn " "$n_cg"
 }
 
 
@@ -119,10 +121,11 @@ function _jobage_queue_history_display()
                     strStatus=$(echo "$line" | awk '{print $5}')
                     if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                         echo -e $strStart"\033[32m >> \033[0m" $line; 
-                    elif [[ "$strStatus" == 'CG' ]]; then
-                        echo -e $strStart"\033[33m >< \033[0m" $line; 
-                    else 
+                    elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
                         echo -e $strStart"\033[33m == \033[0m" $line; 
+                    else
+                        # [[ "$strStatus" == 'CG' ]]; then
+                        echo -e $strStart"\033[33m >< \033[0m" $line; 
                     fi
                 fi
                 # echo '|*' $line
@@ -161,10 +164,11 @@ function _jobage_queue_history_display()
                         strStatus=$(echo "$line" | awk '{print $5}')
                         if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                             echo -e $strStart"\033[32m >> \033[0m" $line; 
-                        elif [[ "$strStatus" == 'CG' ]]; then
-                            echo -e $strStart"\033[33m >< \033[0m" $line; 
-                        else 
+                        elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
                             echo -e $strStart"\033[33m == \033[0m" $line; 
+                        else 
+                            # [[ "$strStatus" == 'CG' ]]; then
+                            echo -e $strStart"\033[33m >< \033[0m" $line; 
                         fi
                     fi
                     # echo '|*' $line
@@ -177,10 +181,11 @@ function _jobage_queue_history_display()
                     strStatus=$(echo "$line" | awk '{print $5}')
                     if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                         echo -e $strStart"\033[32m >> \033[0m" $line; 
-                    elif [[ "$strStatus" == 'CG' ]]; then
+                    elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                        echo -e $strStart"\033[33m == \033[0m" $line;
+                    else     
+                        # [[ "$strStatus" == 'CG' ]]; then
                         echo -e $strStart"\033[33m >< \033[0m" $line; 
-                    else 
-                        echo -e $strStart"\033[33m == \033[0m" $line; 
                     fi
                 fi
                 # echo '|*' $line
