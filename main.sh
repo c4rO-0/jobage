@@ -23,6 +23,7 @@ _jobage_array_jobID=()
 
 
 _jobage_debug='off'
+_jbg_debug_title= "*|-jbg debug: "
 
 if [[ "$@" == *"--debug" ]]; then
     _jobage_debug='on'

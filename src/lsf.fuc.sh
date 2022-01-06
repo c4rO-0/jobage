@@ -111,6 +111,10 @@ function _jobage_lsf_save_queue() {
 function _jobage_lsf_cancel() 
 {
 
+    if [[ "$_jobage_debug" == 'on' ]]; then
+        echo "$_jbg_debug_title" "_jobage_lsf_cancel " "$@"
+    fi
+
     if [[ $SHELL ==  *"/bash" ]]; then
 
         if [ "$#" -eq 0 ]; then

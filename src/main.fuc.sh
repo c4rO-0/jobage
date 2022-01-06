@@ -342,6 +342,9 @@ jbg.kill() {
     elif [ "$1" == "all" ]; then
         _jobage_cancel_all "$@"
     else
+        if [[ "$_jobage_debug" == 'on' ]]; then
+            echo "$_jbg_debug_title" "jbg.kill " "$@"
+        fi
         _jobage_cancel_index "$@"
     fi
     

@@ -19,3 +19,7 @@ _jbg_set_mark_job_warn="><"
 # split line : y/n
 _jbg_split_line="y"
 _jbg_split_line_mark="+----"
+
+# debug
+_jbg_debug_title= "*|-jbg debug: "
+
