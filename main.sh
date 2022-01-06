@@ -4,6 +4,8 @@ _jobage_wPath="$HOME/.local/jobage"
 _jobage_dinfo1="$_jobage_wPath/sq.dat"
 _jobage_dinfo2="$_jobage_wPath/sq-1.dat"
 
+_jobage_setting="$_jobage_wPath/setting.sh"
+
 _jobage_system=''
 _jobage_is_lsf=''
 _jobage_is_slurm=''
@@ -31,6 +33,33 @@ fi
 if [ ! -d "$_jobage_wPath" ]; then
     mkdir -p "$_jobage_wPath"
 fi
+
+# load setting
+if [ -f "$_jobage_setting" ]; then
+    source "$_jobage_setting"
+else
+    # color 
+    _jbg_set_color_start="39m"
+    _jbg_set_color_start_checked="96;104m"
+    _jbg_set_color_job_wait="33m"
+    _jbg_set_color_job_run="32m"
+    _jbg_set_color_job_warn="35m"
+
+    # mark
+    # one character is required
+    _jbg_set_mark_start="*"
+    _jbg_set_mark_start_checked=">"
+    # two characters are required
+    _jbg_set_mark_job_wait="=="
+    _jbg_set_mark_job_run=">>"
+    _jbg_set_mark_job_warn="><"
+
+    # split line
+    # split line : y/n
+    _jbg_split_line="y"
+    _jbg_split_line_mark="+----"
+fi
+
 
 # detect cluster scheduling system
 if [ -x "$(command -v bqueues)" ]; then
