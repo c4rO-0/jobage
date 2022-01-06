@@ -90,7 +90,7 @@ function _jobage_queue_display() {
         fi
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
-    echo "$jbg_title" "total " "\033[$_jbg_set_color_job_wait $n_job \033[0m" " | run " "\033[$_jbg_set_color_job_run $n_run \033[0m" " | warn " "\033[$_jbg_set_color_job_warn $n_cg \033[0m"
+    echo -e "$jbg_title" "total " "\033[$_jbg_set_color_job_wait $n_job \033[0m" " | run " "\033[$_jbg_set_color_job_run $n_run \033[0m" " | warn " "\033[$_jbg_set_color_job_warn $n_cg \033[0m"
 }
 
 
@@ -288,6 +288,7 @@ jbg.help()
     echo "| a job-management tool for cluster scheduling systems."
     echo '| author   : C4r-bs'
     echo '| homepage : https://gitee.com/C4r/jobage'
+    echo '| homepage : https://github.com/c4rO-0/jobage' 
     echo '| --------'
     echo '| command list :'
     echo '| .q      | display queue infomation.'
