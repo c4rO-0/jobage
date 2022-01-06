@@ -21,5 +21,5 @@ _jbg_split_line="y"
 _jbg_split_line_mark="+----"
 
 # debug
-_jbg_debug_title= "*|-jbg debug: "
+_jbg_debug_title="*|-jbg debug: "
 
