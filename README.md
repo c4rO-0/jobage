@@ -18,8 +18,8 @@ author : C4r-bs
 
 ## install
 
-```
-$ source main.sh
+```bash
+source main.sh
 ```
 or
 
@@ -30,3 +30,28 @@ add `source main.sh` to `~/.bashrc`
 1. all commands start with jbg.XXX
 2. run jbg.help to get a summary help information
 3. run jbg.XXX -h get a help information for the command XXX.
+
+## custom 
+
+1. on setting: copy setting file to jobage working directory:
+
+``` bash
+mkdir -p "$_jobage_wPath";
+cp "$_jobage_default_setting" "$_jobage_setting";
+source main.sh
+```
+
+2. edit setting file:
+  
+``` shell
+vi "$_jobage_setting";
+```
+
+3. off setting (if wanted):
+  
+``` shell
+rm "$_jobage_setting";
+```
+
+
+

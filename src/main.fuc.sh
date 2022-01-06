@@ -33,7 +33,7 @@ function _jobage_queue_display() {
         if (( nline > 2 ));then
             strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
             if [[ "$line" == *\ "$cPath" ]]; then
-                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start\033[0m";
+                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_color_start_checked\033[0m";
                 # echo 'find cPath'
             fi
 
@@ -55,24 +55,32 @@ function _jobage_queue_display() {
                     fi
                     n_job=$((n_job+1));
                 fi
-                echo '+----';
+                if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                    echo "$_jbg_split_line_mark";
+                fi
             else
                 if (( nline == 3 ));then
                     echo -e $strStart" $_jbg_set_mark_job_wait " "$line"; 
-                    echo '+----';
+                    if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                        echo "$_jbg_split_line_mark";
+                    fi
                 else
                     strStatus=$(echo "$line" | awk '{print $5}')
                     if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                         echo -e $strStart"\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" $line;
                         n_run=$((n_run+1)) ;
-                        echo '+----';
+                        if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                            echo "$_jbg_split_line_mark";
+                        fi
                         n_run=$((n_run+1)) ;
                     elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
                         n_wait=$((n_cg+1)) ;
                     else 
                         # [[ "$strStatus" == 'CG' ]]; then
                         echo -e $strStart"\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" $line; 
-                        echo '+----'
+                        if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                            echo "$_jbg_split_line_mark";
+                        fi
                         n_cg=$((n_cg+1)) ;
                     fi
                     n_job=$((n_job+1));
@@ -82,7 +90,7 @@ function _jobage_queue_display() {
         fi
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
-    echo "$jbg_title" "total " "\033[33m $n_job \033[0m" " | run " "\033[32m $n_run \033[0m" " | warn " "\033[35m $n_cg \033[0m"
+    echo "$jbg_title" "total " "\033[$_jbg_set_color_job_wait $n_job \033[0m" " | run " "\033[$_jbg_set_color_job_run $n_run \033[0m" " | warn " "\033[$_jbg_set_color_job_warn $n_cg \033[0m"
 }
 
 
@@ -114,7 +122,7 @@ function _jobage_queue_history_display()
                 if (( $nline > 2 ));then
                     strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
                     if [[ "$line" == *\ "$cPath" ]]; then
-                        strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start\033[0m";
+                        strStart="\033[$_jbg_set_color_start_checked$_jbg_set_color_start_checked\033[0m";
                         # echo 'find cPath'
                     fi
                     if (( nline == 3 ));then
@@ -131,7 +139,9 @@ function _jobage_queue_history_display()
                         fi
                     fi
                     # echo '|*' $line
-                    echo '+----'
+                    if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                        echo "$_jbg_split_line_mark";
+                    fi
                     else
                     echo '|#' $line
                 fi
@@ -154,7 +164,7 @@ function _jobage_queue_history_display()
         if (( $nline > 2 ));then
             strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
             if [[ "$line" == *\ "$cPath" ]]; then
-                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start\033[0m";
+                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_color_start_checked\033[0m";
                 # echo 'find cPath'
             fi
 
@@ -174,7 +184,9 @@ function _jobage_queue_history_display()
                         fi
                     fi
                     # echo '|*' $line
-                    echo '+----'
+                    if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                        echo "$_jbg_split_line_mark";
+                    fi
                 fi
             else
                 if (( nline == 3 ));then
@@ -191,7 +203,9 @@ function _jobage_queue_history_display()
                     fi
                 fi
                 # echo '|*' $line
-                echo '+----'
+                if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                    echo "$_jbg_split_line_mark";
+                fi
             fi
 
         else
