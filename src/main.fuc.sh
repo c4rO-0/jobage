@@ -1,4 +1,4 @@
-
+jbg_title='| jbg info | '
 
 _jobage_main_fuc_srcPath=''
 
@@ -81,7 +81,7 @@ function _jobage_queue_display() {
         fi
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
-    echo "| total " "\033[33m $n_job \033[0m" " | run " "\033[32m $n_run \033[0m" " | warn " "\033[35m $n_cg \033[0m"
+    echo "$jbg_title" "total " "\033[33m $n_job \033[0m" " | run " "\033[32m $n_run \033[0m" " | warn " "\033[35m $n_cg \033[0m"
 }
 
 
@@ -224,7 +224,7 @@ _jobage_cd()
 
 _jobage_kill_grep() {
 
-    jobInfo=$(_jobage_queue_display | grep "$@")
+    jobInfo=$(_jobage_queue_display | grep -v "$jbg_title" | grep "$@")
 
 #    for iJobInfo in $(echo $jobInfo); 
     
