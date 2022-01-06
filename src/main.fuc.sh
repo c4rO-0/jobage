@@ -343,8 +343,6 @@ jbg.kill() {
         _jobage_cancel_all "$@"
     else
         _jobage_cancel_index "$@"
-
-
     fi
     
 }

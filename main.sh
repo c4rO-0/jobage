@@ -1,10 +1,17 @@
+# detect PATH
+_jobage_srcPath=''
+if [[ $SHELL == *"/bash" ]]; then
+    _jobage_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
+else
+    _jobage_srcPath=$(dirname $(readlink -f "$0"))
+fi
 
 # varibale
 _jobage_wPath="$HOME/.local/jobage"
 _jobage_dinfo1="$_jobage_wPath/sq.dat"
 _jobage_dinfo2="$_jobage_wPath/sq-1.dat"
 
-_jobage_default_setting="$_jobage_wPath/src/setting.default.sh"
+_jobage_default_setting="$_jobage_srcPath/src/setting.default.sh"
 _jobage_setting="$_jobage_wPath/setting.sh"
 
 _jobage_system=''
@@ -14,7 +21,6 @@ _jobage_is_slurm=''
 _jobage_array_jobDir=()
 _jobage_array_jobID=()
 
-_jobage_srcPath=''
 
 _jobage_debug='off'
 
@@ -23,12 +29,6 @@ if [[ "$@" == *"--debug" ]]; then
     echo '*|-jobage(jbg) warning: debug mod is on'
 fi
 
-# detect PATH
-if [[ $SHELL == *"/bash" ]]; then
-    _jobage_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
-else
-    _jobage_srcPath=$(dirname $(readlink -f "$0"))
-fi
 
 # check saving directory
 if [ ! -d "$_jobage_wPath" ]; then
