@@ -298,6 +298,11 @@ jbg.help()
     echo '| .cd     | go to the working dirctory of job.'
     echo '| - - - - '
     echo '| run .any -h/--help to get the help information for any command.' 
+    echo '| - - - - '
+    echo '| custom setting : '
+    echo '| $ cp "$_jobage_default_setting" "$_jobage_setting"; '
+    echo '| $ edit "$_jobage_setting"; '
+    echo '| $ source main.sh ;'
     echo '| --------'
 }
 
