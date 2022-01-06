@@ -339,7 +339,7 @@ jbg.kill() {
     fi
     if [[ "$1" == "grep" ]]; then
         _jobage_kill_grep "${@:2}"
-    elif [ "$1" == "all" ]; then
+    elif [[ "$1" == "all" ]]; then
         _jobage_cancel_all "$@"
     else
         if [[ "$_jobage_debug" == 'on' ]]; then
