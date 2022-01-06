@@ -53,8 +53,8 @@ function _jobage_queue_display() {
                         echo -e $strStart"\033[35m >< \033[0m" $line; 
                         n_cg=$((n_cg+1)) ;
                     fi
+                    n_job=$((n_job+1));
                 fi
-                n_job=$((n_job+1));
                 echo '+----';
             else
                 if (( nline == 3 ));then
@@ -74,8 +74,9 @@ function _jobage_queue_display() {
                         echo '+----'
                         n_cg=$((n_cg+1)) ;
                     fi
+                    n_job=$((n_job+1));
                 fi
-                n_job=$((n_job+1));
+
             fi
         fi
     done < "$_jobage_dinfo1"
