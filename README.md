@@ -17,8 +17,9 @@ author : C4r-bs
 
 |       | bash | zsh  |
 | ----- | ---- | ---- |
-| lsf   | o    | o    |
-| slurm | o    | o    |
+| lsf   | done | done |
+| slurm | done | done |
+| PBS   | todo | -    |
 
 
 ## install
@@ -58,5 +59,7 @@ vi "$_jobage_setting";
 rm "$_jobage_setting";
 ```
 
+## todo list
 
+-[ ] jbg.sub
 
