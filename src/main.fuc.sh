@@ -23,13 +23,17 @@ function _jobage_queue_display() {
     OLD_IFS="$IFS"
     IFS=
     nline=0
+    n_run=0
+    n_cg=0
+    n_wait=0
+    n_job=0
     while read line
     do
 	    nline=$((nline+1))
         if (( nline > 2 ));then
             strStart='*'
             if [[ "$line" == *\ "$cPath" ]]; then
-                strStart='\033[96;104m>\033[0m'
+                strStart='\033[96;104m>\033[0m';
                 # echo 'find cPath'
             fi
 
@@ -39,32 +43,42 @@ function _jobage_queue_display() {
                 else
                     strStatus=$(echo "$line" | awk '{print $5}')
                     if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                        echo -e $strStart"\033[32m >> \033[0m" $line; 
+                        echo -e $strStart"\033[32m >> \033[0m" $line;
+                        n_run=$((n_run+1)) ;
                     elif [[ "$strStatus" == 'CG' ]]; then
                         echo -e $strStart"\033[33m >< \033[0m" $line; 
+                        n_cg=$((n_cg+1)) ;
                     else 
                         echo -e $strStart"\033[33m == \033[0m" $line; 
+                        n_wait=$((n_cg+1)) ;
                     fi
                 fi
-                echo '+----'
+                n_job=$((n_job+1));
+                echo '+----';
             else
                 if (( nline == 3 ));then
                     echo -e $strStart" == " $line; 
-                    echo '+----'
+                    echo '+----';
                 else
                     strStatus=$(echo "$line" | awk '{print $5}')
                     if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                         echo -e $strStart"\033[32m >> \033[0m" $line; 
-                        echo '+----'
+                        echo '+----';
+                        n_run=$((n_run+1)) ;
                     elif [[ "$strStatus" == 'CG' ]]; then
                         echo -e $strStart"\033[33m >< \033[0m" $line; 
                         echo '+----'
+                        n_cg=$((n_cg+1)) ;
+                    else
+                        n_wait=$((n_cg+1)) ;
                     fi
                 fi
+                n_job=$((n_job+1));
             fi
         fi
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
+    echo "| total " "$n_job" " | run " "$n_run"
 }
 
 
