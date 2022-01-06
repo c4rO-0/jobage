@@ -50,7 +50,7 @@ function _jobage_queue_display() {
                         n_wait=$((n_cg+1)) ;
                     else
                         # [[ "$strStatus" == 'CG' ]]; then
-                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                        echo -e $strStart"\033[35m >< \033[0m" $line; 
                         n_cg=$((n_cg+1)) ;
                     fi
                 fi
@@ -70,7 +70,7 @@ function _jobage_queue_display() {
                         n_wait=$((n_cg+1)) ;
                     else 
                         # [[ "$strStatus" == 'CG' ]]; then
-                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                        echo -e $strStart"\033[35m >< \033[0m" $line; 
                         echo '+----'
                         n_cg=$((n_cg+1)) ;
                     fi
@@ -80,7 +80,7 @@ function _jobage_queue_display() {
         fi
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
-    echo "| total " "$n_job" " | run " "$n_run" " | warn " "$n_cg"
+    echo "| total " "\033[33m $n_job \033[0m" " | run " "\033[32m $n_run \033[0m" " | warn " "\033[35m $n_cg \033[0m"
 }
 
 
@@ -125,7 +125,7 @@ function _jobage_queue_history_display()
                         echo -e $strStart"\033[33m == \033[0m" $line; 
                     else
                         # [[ "$strStatus" == 'CG' ]]; then
-                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                        echo -e $strStart"\033[35m >< \033[0m" $line; 
                     fi
                 fi
                 # echo '|*' $line
@@ -168,7 +168,7 @@ function _jobage_queue_history_display()
                             echo -e $strStart"\033[33m == \033[0m" $line; 
                         else 
                             # [[ "$strStatus" == 'CG' ]]; then
-                            echo -e $strStart"\033[33m >< \033[0m" $line; 
+                            echo -e $strStart"\033[35m >< \033[0m" $line; 
                         fi
                     fi
                     # echo '|*' $line
@@ -185,7 +185,7 @@ function _jobage_queue_history_display()
                         echo -e $strStart"\033[33m == \033[0m" $line;
                     else     
                         # [[ "$strStatus" == 'CG' ]]; then
-                        echo -e $strStart"\033[33m >< \033[0m" $line; 
+                        echo -e $strStart"\033[35m >< \033[0m" $line; 
                     fi
                 fi
                 # echo '|*' $line
