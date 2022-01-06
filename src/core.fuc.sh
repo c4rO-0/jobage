@@ -7,14 +7,14 @@ function _jobage_displaytime {
         return
     fi
 
-    local T=$1
-    local D=$((T/60/60/24))
-    local H=$((T/60/60%24))
-    local M=$((T/60%60))
-    local S=$((T%60))
-    (( $D > 0 )) && printf '%dd-' $D
-    (( $H > 0 )) && printf '%dh:' $H
-    (( $M > 0 )) && printf '%dm:' $M
+    local _jobage_core_T=$1
+    local _jobage_core_D=$((_jobage_core_T/60/60/24))
+    local _jobage_core_H=$((_jobage_core_T/60/60%24))
+    local _jobage_core_M=$((_jobage_core_T/60%60))
+    local _jobage_core_S=$((_jobage_core_T%60))
+    (( $_jobage_core_D > 0 )) && printf '%dd-' $_jobage_core_D
+    (( $_jobage_core_H > 0 )) && printf '%dh:' $_jobage_core_H
+    (( $_jobage_core_M > 0 )) && printf '%dm:' $_jobage_core_M
     #   (( $D > 0 || $H > 0 || $M > 0 )) && printf ':'
-    printf '%ds\n' $S
+    printf '%ds\n' $_jobage_core_S
 }

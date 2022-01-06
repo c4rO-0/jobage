@@ -46,40 +46,40 @@ function _jobage_lsf_raw() {
         return
     fi
 
-    info=$(bjobs -u $USER -o "jobid:7 queue:10 job_name:20 stat:5 run_time exec_host:12 sub_cwd")
+    _jobage_lsf_info=$(bjobs -u $USER -o "jobid:7 queue:10 job_name:20 stat:5 run_time exec_host:12 sub_cwd")
 
-    if [[ "$info" == *"No unfinished job found"* ]]; then
+    if [[ "$_jobage_lsf_info" == *"No unfinished job found"* ]]; then
         echo ""
     else
-        secs=$(echo "$info" | awk '{print $5}' | tail --lines=+2 | sed 's/ //g')
+        _jobage_lsf_secs=$(echo "$_jobage_lsf_info" | awk '{print $5}' | tail --lines=+2 | sed 's/ //g')
         
-        info_r=$info
+        _jobage_lsf_info_r=$_jobage_lsf_info
         OLD_IFS="$IFS"
         IFS=
-        while read t
+        while read _jobage_lsf_t
         do
-                tRead_raw=$(_jobage_displaytime "$t")
-                tRead=$(printf '%-16s' "$tRead_raw")
-                info_r=$(echo "$info_r" | sed "s/$t second(s)/$tRead/g")
-        done <<< "$secs"
+                _jobage_lsf_tRead_raw=$(_jobage_displaytime "$_jobage_lsf_t")
+                _jobage_lsf_tRead=$(printf '%-16s' "$_jobage_lsf_tRead_raw")
+                _jobage_lsf_info_r=$(echo "$_jobage_lsf_info_r" | sed "s/$_jobage_lsf_t second(s)/$_jobage_lsf_tRead/g")
+        done <<< "$_jobage_lsf_secs"
         IFS="$OLD_IFS"
         
-        info_r=$(echo "$info_r" | sed "s|\$HOME|$HOME|g")
-        echo "$info_r"
+        _jobage_lsf_info_r=$(echo "$_jobage_lsf_info_r" | sed "s|\$HOME|$HOME|g")
+        echo "$_jobage_lsf_info_r"
     fi
 }
 
 
 function _jobage_lsf_save_queue() {
     
-    timestampNow=$(date +%s)
+    _jobage_lsf_timestampNow=$(date +%s)
 
     if [ -f "$_jobage_dinfo1" ] && [ -s "$_jobage_dinfo1" ]; then
         if [ -f "$_jobage_dinfo2" ] && [ -s "$_jobage_dinfo2" ]; then
-            timestampPre=$(head -n1 "$_jobage_dinfo2" | awk '{print $7}')
+            _jobage_lsf_timestampPre=$(head -n1 "$_jobage_dinfo2" | awk '{print $7}')
             # echo $timestampNow $timestampPre 
             # echo $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc )
-            if [[ $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc ) -eq 1 ]]; then
+            if [[ $(echo "scale=0 ;$_jobage_lsf_timestampNow-$_jobage_lsf_timestampPre > 300" | bc ) -eq 1 ]]; then
             cp "$_jobage_dinfo1" "$_jobage_dinfo2"
             fi
             # echo 'cp end'
@@ -88,9 +88,9 @@ function _jobage_lsf_save_queue() {
         fi
     fi
 
-    jobs=$(_jobage_lsf_raw | tail -n +2 | sort -k 2n)
+    _jobage_lsf_jobs=$(_jobage_lsf_raw | tail -n +2 | sort -k 2n)
 
-    { { date ; echo " " $timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo1"
+    { { date ; echo " " $_jobage_lsf_timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo1"
     
     # echo "debug:--->"
     # cat ~/.local/sq.dat
@@ -100,10 +100,10 @@ function _jobage_lsf_save_queue() {
     printf "%6s %10s %11s %10s %3s %8s %8s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODES" "WORK_DIR" >>  "$_jobage_dinfo1"
     # echo "$jobs" | nl -v 1
     
-    _jobage_array_jobDir=($(echo "$jobs" | awk '{print $7}'))
-    _jobage_array_jobID=($(echo "$jobs" | awk '{print $1}'))
+    _jobage_array_jobDir=($(echo "$_jobage_lsf_jobs" | awk '{print $7}'))
+    _jobage_array_jobID=($(echo "$_jobage_lsf_jobs" | awk '{print $1}'))
 
-    echo "$jobs" | nl -v 1 | sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g' | sed 's/\$HOME/~/g' >> "$_jobage_dinfo1"
+    echo "$_jobage_lsf_jobs" | nl -v 1 | sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g' | sed 's/\$HOME/~/g' >> "$_jobage_dinfo1"
 }
 
 
@@ -138,8 +138,8 @@ function _jobage_lsf_cancel_all()
     echo 'Will cancel all jobs !!!'
     echo '-------------------'
     echo '| confirm : y/n ?'
-    read confirm
-    if [[ $confirm == 'y' ]];then
+    read _jobage_lsf_confirm
+    if [[ $_jobage_lsf_confirm == 'y' ]];then
         echo 'confirm. cancling...'
 
         for i in $(bjobs | grep "$USER" | awk '{print $1}');
@@ -152,6 +152,16 @@ function _jobage_lsf_cancel_all()
 	    echo 'not confirm'
     fi
 
+}
+
+function _jobage_lsf_submit()
+{
+    _jobage_lsf_filename="$@"
+    if [[ -f "$_jobage_lsf_filename"]]; then
+        bsub < "$_jobage_lsf_filename";
+    else
+        echo "jbg error: do not find file " "$_jobage_lsf_filename";
+    fi
 }
 
 # -------------------------------------
@@ -176,4 +186,9 @@ function _jobage_cancel_index()
 function _jobage_cancel_all()
 {
     _jobage_lsf_cancel_all "$@"
+}
+
+function _jobage_submit()
+{
+    _jobage_lsf_submit "$@"
 }

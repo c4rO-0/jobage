@@ -296,6 +296,7 @@ jbg.help()
     echo '| .qrun   | display running queue infomation.'
     echo '| .qh     | display last two queue infomation.'
     echo '| - - - - '
+    echo '| .sub    | submit job.'
     echo '| .kill   | kill specific jobs by index/grep/all.'
     echo '| .cd     | go to the working dirctory of job.'
     echo '| - - - - '
@@ -374,4 +375,14 @@ jbg.cd()
         return
     fi
     _jobage_cd "$@"
+}
+
+jbg.sub()
+{
+    if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+        echo '|-submit job using [script].'
+        echo '|-sub [script]'
+        return
+    fi
+    _jobage_submit "$@"
 }
