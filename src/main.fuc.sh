@@ -33,7 +33,7 @@ function _jobage_queue_display() {
         if (( nline > 2 ));then
             strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
             if [[ "$line" == *\ "$cPath" ]]; then
-                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_color_start_checked\033[0m";
+                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
                 # echo 'find cPath'
             fi
 
@@ -122,7 +122,7 @@ function _jobage_queue_history_display()
                 if (( $nline > 2 ));then
                     strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
                     if [[ "$line" == *\ "$cPath" ]]; then
-                        strStart="\033[$_jbg_set_color_start_checked$_jbg_set_color_start_checked\033[0m";
+                        strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
                         # echo 'find cPath'
                     fi
                     if (( nline == 3 ));then
@@ -164,7 +164,7 @@ function _jobage_queue_history_display()
         if (( $nline > 2 ));then
             strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
             if [[ "$line" == *\ "$cPath" ]]; then
-                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_color_start_checked\033[0m";
+                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
                 # echo 'find cPath'
             fi
 
