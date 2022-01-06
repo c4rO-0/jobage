@@ -287,8 +287,9 @@ jbg.help()
 {
     echo "| a job-management tool for cluster scheduling systems."
     echo '| author   : C4r-bs'
-    echo '| homepage : https://gitee.com/C4r/jobage'
-    echo '| homepage : https://github.com/c4rO-0/jobage' 
+    echo '| C4r homepage : http://papercomment.tech/'
+    echo '| project homepage (gitee)  : https://gitee.com/C4r/jobage'
+    echo '| project homepage (github) : https://github.com/c4rO-0/jobage' 
     echo '| --------'
     echo '| command list :'
     echo '| .q      | display queue infomation.'
