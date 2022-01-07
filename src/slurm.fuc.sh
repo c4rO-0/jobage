@@ -114,7 +114,7 @@ function _jobage_slurm_cancel_all()
 function _jobage_slurm_submit()
 {
     _jobage_slurm_filename="$@"
-    if [[ -f "$_jobage_slurm_filename"]]; then
+    if [[ -f "$_jobage_slurm_filename" ]]; then
         sbatch "$_jobage_slurm_filename";
     else
         echo "jbg error: do not find file " "$_jobage_slurm_filename";
