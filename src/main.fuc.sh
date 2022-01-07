@@ -29,67 +29,67 @@ function _jobage_queue_display() {
     n_job=0
     while read line
     do
-        [ -z "$line" ] && continue
+        if [[ ! -z "$line" ]];then
 
-	    nline=$((nline+1))
-        if (( nline > 2 ));then
-            strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
-            if [[ "$line" == *\ "$cPath" ]]; then
-                strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
-                # echo 'find cPath'
-            fi
+            nline=$((nline+1))
+            if (( nline > 2 ));then
+                strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
+                if [[ "$line" == *\ "$cPath" ]]; then
+                    strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
+                    # echo 'find cPath'
+                fi
 
-            if [[ "$outType" == "all" ]]; then
-                if (( nline == 3 ));then
-                    echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
-                else
-                    strStatus=$(echo "$line" | awk '{print $5}')
-                    if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                        echo -e "$strStart\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
-                        n_run=$((n_run+1)) ;
-                    elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
-                        echo -e "$strStart\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
-                        n_wait=$((n_cg+1)) ;
+                if [[ "$outType" == "all" ]]; then
+                    if (( nline == 3 ));then
+                        echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
                     else
-                        # [[ "$strStatus" == 'CG' ]]; then
-                        echo -e "$strStart\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
-                        n_cg=$((n_cg+1)) ;
+                        strStatus=$(echo "$line" | awk '{print $5}')
+                        if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                            echo -e "$strStart\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                            n_run=$((n_run+1)) ;
+                        elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                            echo -e "$strStart\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
+                            n_wait=$((n_cg+1)) ;
+                        else
+                            # [[ "$strStatus" == 'CG' ]]; then
+                            echo -e "$strStart\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                            n_cg=$((n_cg+1)) ;
+                        fi
+                        n_job=$((n_job+1));
                     fi
-                    n_job=$((n_job+1));
-                fi
-                if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
-                    echo "$_jbg_split_line_mark";
-                fi
-            else
-                if (( nline == 3 ));then
-                    echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
                     if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
                         echo "$_jbg_split_line_mark";
                     fi
                 else
-                    strStatus=$(echo "$line" | awk '{print $5}')
-                    if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                        echo -e "$strStart\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
-                        n_run=$((n_run+1)) ;
+                    if (( nline == 3 ));then
+                        echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
                         if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
                             echo "$_jbg_split_line_mark";
                         fi
-                        n_run=$((n_run+1)) ;
-                    elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
-                        n_wait=$((n_cg+1)) ;
-                    else 
-                        # [[ "$strStatus" == 'CG' ]]; then
-                        echo -e "$strStart\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
-                        if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
-                            echo "$_jbg_split_line_mark";
+                    else
+                        strStatus=$(echo "$line" | awk '{print $5}')
+                        if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                            echo -e "$strStart\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                            n_run=$((n_run+1)) ;
+                            if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                                echo "$_jbg_split_line_mark";
+                            fi
+                            n_run=$((n_run+1)) ;
+                        elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                            n_wait=$((n_cg+1)) ;
+                        else 
+                            # [[ "$strStatus" == 'CG' ]]; then
+                            echo -e "$strStart\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                            if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                                echo "$_jbg_split_line_mark";
+                            fi
+                            n_cg=$((n_cg+1)) ;
                         fi
-                        n_cg=$((n_cg+1)) ;
-                    fi
-                    n_job=$((n_job+1));
-                fi
-
-            fi
-        fi
+                        n_job=$((n_job+1));
+                    fi # nline == 3
+                fi #outtype
+            fi # nline check
+        fi # empty check
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
     echo -e "$jbg_title" "total " "\033[$_jbg_set_color_job_wait $n_job \033[0m" " | run " "\033[$_jbg_set_color_job_run $n_run \033[0m" " | warn " "\033[$_jbg_set_color_job_warn $n_cg \033[0m"
@@ -120,35 +120,36 @@ function _jobage_queue_history_display()
             nline=0
             while read line
             do
-                [ -z "$line" ] && continue
+                if [[ ! -z "$line" ]];then
 
-                nline=$((nline+1))
-                if (( $nline > 2 ));then
-                    strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
-                    if [[ "$line" == *\ "$cPath" ]]; then
-                        strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
-                        # echo 'find cPath'
-                    fi
-                    if (( nline == 3 ));then
-                        echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
-                    else
-                        strStatus=$(echo "$line" | awk '{print $5}')
-                        if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                            echo -e "$strStart\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
-                        elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
-                            echo -e "$strStart\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
-                        else
-                            # [[ "$strStatus" == 'CG' ]]; then
-                        echo -e "$strStart\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                    nline=$((nline+1))
+                    if (( $nline > 2 ));then
+                        strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
+                        if [[ "$line" == *\ "$cPath" ]]; then
+                            strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
+                            # echo 'find cPath'
                         fi
+                        if (( nline == 3 ));then
+                            echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
+                        else
+                            strStatus=$(echo "$line" | awk '{print $5}')
+                            if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                                echo -e "$strStart\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                            elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                                echo -e "$strStart\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
+                            else
+                                # [[ "$strStatus" == 'CG' ]]; then
+                            echo -e "$strStart\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                            fi
+                        fi
+                        # echo '|*' $line
+                        if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                            echo "$_jbg_split_line_mark";
+                        fi
+                        else
+                        echo '|#' $line
                     fi
-                    # echo '|*' $line
-                    if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
-                        echo "$_jbg_split_line_mark";
-                    fi
-                    else
-                    echo '|#' $line
-                fi
+                fi # check empty line
             done < "$_jobage_dinfo2"
             IFS="$OLD_IFS"
         fi
@@ -164,19 +165,38 @@ function _jobage_queue_history_display()
         nline=0
         while read line
         do
-            [ -z "$line" ] && continue
-            nline=$((nline+1))
-            if (( $nline > 2 ));then
-                strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
-                if [[ "$line" == *\ "$cPath" ]]; then
-                    strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
-                    # echo 'find cPath'
-                fi
+            if [[ ! -z "$line" ]];then
+                nline=$((nline+1))
+                if (( $nline > 2 ));then
+                    strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
+                    if [[ "$line" == *\ "$cPath" ]]; then
+                        strStart="\033[$_jbg_set_color_start_checked$_jbg_set_mark_start_checked\033[0m";
+                        # echo 'find cPath'
+                    fi
 
-                if (( $hline == 1 )); then
-                    if [[ $line == *\ "$cPath" ]]; then
+                    if (( $hline == 1 )); then
+                        if [[ $line == *\ "$cPath" ]]; then
+                            if (( nline == 3 ));then
+                                strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
+                            else
+                                strStatus=$(echo "$line" | awk '{print $5}')
+                                if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
+                                    echo -e "$strStart\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                                elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                                    echo -e "$strStart\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
+                                else 
+                                    # [[ "$strStatus" == 'CG' ]]; then
+                                    echo -e "$strStart\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                                fi
+                            fi
+                            # echo '|*' $line
+                            if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
+                                echo "$_jbg_split_line_mark";
+                            fi
+                        fi
+                    else
                         if (( nline == 3 ));then
-                            strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
+                            echo -e "$strStart == " "$line"; 
                         else
                             strStatus=$(echo "$line" | awk '{print $5}')
                             if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
@@ -193,29 +213,11 @@ function _jobage_queue_history_display()
                             echo "$_jbg_split_line_mark";
                         fi
                     fi
-                else
-                    if (( nline == 3 ));then
-                        echo -e "$strStart == " "$line"; 
-                    else
-                        strStatus=$(echo "$line" | awk '{print $5}')
-                        if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                            echo -e "$strStart\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
-                        elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
-                            echo -e "$strStart\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
-                        else 
-                            # [[ "$strStatus" == 'CG' ]]; then
-                            echo -e "$strStart\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
-                        fi
-                    fi
-                    # echo '|*' $line
-                    if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
-                        echo "$_jbg_split_line_mark";
-                    fi
-                fi
 
-            else
-                echo '|#' $line
-            fi
+                else
+                    echo '|#' $line
+                fi
+            fi # check empty line
         done < "$_jobage_dinfo1"
         IFS="$OLD_IFS"
     fi
