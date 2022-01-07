@@ -15,11 +15,11 @@ author : C4r-bs
 
 ## progress 
 
-|       | bash | zsh  |
-| ----- | ---- | ---- |
-| lsf   | done | done |
-| slurm | done | done |
-| PBS   | todo | -    |
+|       | bash | zsh   |
+| ----- | ---- | ----- |
+| lsf   | done | done  |
+| slurm | done | debug |
+| PBS   | todo | -     |
 
 
 ## install
