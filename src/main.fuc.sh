@@ -29,7 +29,7 @@ function _jobage_queue_display() {
     n_job=0
     while read line
     do
-        if [[ ! -z "$line" ]];then
+        if [[ ! -z "$line" ]] || [[ "$line" != "" ]];then
 
             nline=$((nline+1))
             if (( nline > 2 ));then
@@ -120,7 +120,7 @@ function _jobage_queue_history_display()
             nline=0
             while read line
             do
-                if [[ ! -z "$line" ]];then
+                if [[ ! -z "$line" ]] || [[ "$line" != "" ]];then
 
                     nline=$((nline+1))
                     if (( $nline > 2 ));then
@@ -165,7 +165,7 @@ function _jobage_queue_history_display()
         nline=0
         while read line
         do
-            if [[ ! -z "$line" ]];then
+            if [[ ! -z "$line" ]] || [[ "$line" != "" ]];then
                 nline=$((nline+1))
                 if (( $nline > 2 ));then
                     strStart="\033[$_jbg_set_color_start$_jbg_set_mark_start\033[0m";
