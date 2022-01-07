@@ -93,4 +93,20 @@ else
         echo "*|-jbg debug: not found cluster scheduling systems"
         echo "*|-in [lsf, slurm ...]"
     fi
+    jbg.help() 
+    {
+        echo "| a job-management tool for cluster scheduling systems."
+        cat "$_jobage_srcPath/src/version.dat";
+        echo '| author   : C4r-bs'
+        # echo '| C4r homepage : http://papercomment.tech/'
+        echo -e '| project link (gitee)  : https://gitee.com/C4r/jobage'
+        echo -e '| project link (github) : https://github.com/c4rO-0/jobage'
+        echo '| --------'
+        echo '| no supported cluster scheduling system found.'
+        echo '| please check you are using one of the systems:'
+        echo '| lsf   : ' ' run "bqueues -V"'
+        echo '| slurm : ' ' run "squeue -V"'
+        echo '| --------'
+    }
+
 fi

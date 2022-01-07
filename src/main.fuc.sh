@@ -306,6 +306,7 @@ jbg.help()
     echo -e '| project link (gitee)  : https://gitee.com/C4r/jobage'
     echo -e '| project link (github) : https://github.com/c4rO-0/jobage'
     echo '| --------'
+    echo '| found ' "$_jobage_system" " system."
     echo '| command list :'
     echo '| .q      | display queue infomation.'
     echo '| .qrun   | display running queue infomation.'
