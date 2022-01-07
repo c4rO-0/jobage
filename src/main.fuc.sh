@@ -303,8 +303,8 @@ jbg.help()
     cat "$_jobage_main_fuc_srcPath/version.dat";
     echo '| author   : C4r-bs'
     # echo '| C4r homepage : http://papercomment.tech/'
-    echo -e '| project link (gitee)  : \e]8;;https://gitee.com/C4r/jobage\ahttps://gitee.com/C4r/jobage\a'
-    echo -e '| project link (github) : \e]8;;https://github.com/c4rO-0/jobage\ahttps://github.com/c4rO-0/jobage\a'
+    echo -e '| project link (gitee)  : https://gitee.com/C4r/jobage'
+    echo -e '| project link (github) : https://github.com/c4rO-0/jobage'
     echo '| --------'
     echo '| command list :'
     echo '| .q      | display queue infomation.'
