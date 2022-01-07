@@ -300,6 +300,7 @@ _jobage_kill_grep() {
 jbg.help() 
 {
     echo "| a job-management tool for cluster scheduling systems."
+    cat "$_jobage_main_fuc_srcPath/version.dat";
     echo '| author   : C4r-bs'
     # echo '| C4r homepage : http://papercomment.tech/'
     echo -e '| project link (gitee)  : \e]8;;https://gitee.com/C4r/jobage\ahttps://gitee.com/C4r/jobage\a'
