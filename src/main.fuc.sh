@@ -29,7 +29,7 @@ function _jobage_queue_display() {
     n_job=0
     while read line
     do
-        if [[ ! -z "$line" ]];then
+        # if [[ ! -z "$line" ]];then
 
             nline=$((nline+1))
             if (( nline > 2 ));then
@@ -89,7 +89,7 @@ function _jobage_queue_display() {
                     fi # nline == 3
                 fi #outtype
             fi # nline check
-        fi # empty check
+        # fi # empty check
     done < "$_jobage_dinfo1"
     IFS="$OLD_IFS"
     echo -e "$jbg_title" "total " "\033[$_jbg_set_color_job_wait $n_job \033[0m" " | run " "\033[$_jbg_set_color_job_run $n_run \033[0m" " | warn " "\033[$_jbg_set_color_job_warn $n_cg \033[0m"
