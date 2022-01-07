@@ -157,7 +157,7 @@ function _jobage_lsf_cancel_all()
 function _jobage_lsf_submit()
 {
     _jobage_lsf_filename="$@"
-    if [[ -f "$_jobage_lsf_filename"]]; then
+    if [[ -f "$_jobage_lsf_filename" ]]; then
         bsub < "$_jobage_lsf_filename";
     else
         echo "jbg error: do not find file " "$_jobage_lsf_filename";
