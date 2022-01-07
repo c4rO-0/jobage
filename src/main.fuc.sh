@@ -52,6 +52,9 @@ function _jobage_queue_display() {
                             n_wait=$((n_cg+1)) ;
                         else
                             # [[ "$strStatus" == 'CG' ]]; then
+                            if [[ "$_jobage_debug" == 'on' ]]; then
+                                echo "$_jbg_debug_title" "found warn line " ">$line<"
+                            fi
                             echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
                             n_cg=$((n_cg+1)) ;
                         fi
