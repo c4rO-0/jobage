@@ -3,7 +3,7 @@ jbg_title='| jbg info | '
 _jobage_main_fuc_srcPath=''
 
 # detect PATH
-if [[ $SHELL == *"/bash" ]]; then
+if [[ "$_jbg_SHELL" == *"/bash" ]]; then
     _jobage_main_fuc_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 else
     _jobage_main_fuc_srcPath=$(dirname $(readlink -f "$0"))
@@ -234,7 +234,7 @@ function _jobage_queue_history_display()
 
 _jobage_cd()
 {
-    if [[ $SHELL ==  *"/bash" ]]; then
+    if [[ "$_jbg_SHELL" ==  *"/bash" ]]; then
         if [ "$#" -eq 0 ]; then
             cd "${_jobage_array_jobDir[0]}"
         else

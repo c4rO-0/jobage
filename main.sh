@@ -1,10 +1,29 @@
+
+_jbg_SHELL="$(readlink /proc/$$/exe)"
+
+_jobage_debug='off'
+_jbg_debug_title="*|-jbg debug: "
+
+if [[ "$@" == *"--debug" ]]; then
+    _jobage_debug='on'
+    echo '*|-jobage(jbg) warning: debug mod is on'
+    echo "*|-jbg shell " $_jbg_SHELL
+fi
+
 # detect PATH
 _jobage_srcPath=''
-if [[ $SHELL == *"/bash" ]]; then
+if [[ "$_jbg_SHELL" == *"/bash" ]]; then
+    if [[ "$_jobage_debug" == 'on' ]]; then
+        echo "*|-jbg debug: _jobage_srcPath " "${BASH_SOURCE[0]}"
+    fi
     _jobage_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 else
+    if [[ "$_jobage_debug" == 'on' ]]; then
+        echo "*|-jbg debug: _jobage_srcPath " "$0"
+    fi
     _jobage_srcPath=$(dirname $(readlink -f "$0"))
 fi
+
 
 # varibale
 _jobage_wPath="$HOME/.local/jobage"
@@ -20,15 +39,6 @@ _jobage_is_slurm=''
 
 _jobage_array_jobDir=()
 _jobage_array_jobID=()
-
-
-_jobage_debug='off'
-_jbg_debug_title="*|-jbg debug: "
-
-if [[ "$@" == *"--debug" ]]; then
-    _jobage_debug='on'
-    echo '*|-jobage(jbg) warning: debug mod is on'
-fi
 
 
 # check saving directory

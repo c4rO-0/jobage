@@ -1,5 +1,5 @@
 # detect PATH
-if [[ $SHELL == *"/bash" ]]; then
+if [[ "$_jbg_SHELL" == *"/bash" ]]; then
     _jobage_version_fuc_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 else
     _jobage_version_fuc_srcPath=$(dirname $(readlink -f "$0"))

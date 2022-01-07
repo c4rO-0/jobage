@@ -1,4 +1,9 @@
 # basic func
+function _jobage_detact_shell()
+{
+    echo "$(readlink /proc/$$/exe)"
+}
+
 function _jobage_displaytime {
     # help
     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then

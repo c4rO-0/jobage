@@ -30,7 +30,7 @@
 _jobage_lsf_fuc_srcPath=''
 
 # detect PATH
-if [[ $SHELL == *"/bash" ]]; then
+if [[ "$_jbg_SHELL" == *"/bash" ]]; then
     _jobage_lsf_fuc_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 else
     _jobage_lsf_fuc_srcPath=$(dirname $(readlink -f "$0"))
@@ -115,7 +115,7 @@ function _jobage_lsf_cancel()
         echo "$_jbg_debug_title" "_jobage_lsf_cancel " "$@"
     fi
 
-    if [[ $SHELL ==  *"/bash" ]]; then
+    if [[ "$_jbg_SHELL" ==  *"/bash" ]]; then
 
         if [ "$#" -eq 0 ]; then
             bkill ${_jobage_array_jobID[0]}
