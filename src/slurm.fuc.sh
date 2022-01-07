@@ -65,7 +65,7 @@ _jobage_slurm_save_queue()
 
     _jobage_slurm_jobs=$(squeue -u "$USER" -o "%.10i %.9P %.12j %.2t %.10M %.5D %.Z" | tail -n +2 | sort -k 2n)
 
-    { { date ; echo " " $_jobage_lsf_timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo1"
+    { { date ; echo " " $_jobage_slurm_timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo1"
     
     echo "----------" >> "$_jobage_dinfo1"
 
