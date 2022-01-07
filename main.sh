@@ -64,10 +64,10 @@ if [ -f "$_jobage_setting" ]; then
 fi
 
 # detect cluster scheduling system
-if [ -x "$(command -v bqueues)" ]; then
+if [[ -x "$(command -v bqueues)" ]] && [[ "$(bqueues -V 2>&1 | head -1)" == *'IBM Spectrum LSF'* ]]; then
     _jobage_system='lsf'
     source "$_jobage_srcPath/src/lsf.fuc.sh"
-elif [ -x "$(command -v squeue)" ]; then
+elif [[ -x "$(command -v squeue)" ]] && [[ "$(squeue -V 2>&1 | head -1)" == *'slurm '* ]]; then
     _jobage_system='slurm'
     source "$_jobage_srcPath/src/slurm.fuc.sh"
 fi
