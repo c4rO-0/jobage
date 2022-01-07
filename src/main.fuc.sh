@@ -323,7 +323,15 @@ jbg.q()
         return
     fi
 
+    if [[ "$_jobage_debug" == 'on' ]]; then
+        echo "$_jbg_debug_title" "_jobage_save_queue" "$@"
+    fi
+
     _jobage_save_queue "$@"    
+
+    if [[ "$_jobage_debug" == 'on' ]]; then
+        echo "$_jbg_debug_title" "_jobage_queue_display" "$@"
+    fi
 
     _jobage_queue_display "$@"
 }

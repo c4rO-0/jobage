@@ -47,8 +47,13 @@ _jobage_slurm_save_queue()
     if [ -f "$_jobage_dinfo1" ] && [ -s "$_jobage_dinfo1" ]; then
         if [ -f "$_jobage_dinfo2" ] && [ -s "$_jobage_dinfo2" ]; then
             _jobage_slurm_timestampPre=$(head -n1 "$_jobage_dinfo2" | awk '{print $7}')
-            # echo $timestampNow $timestampPre 
-            # echo $(echo "scale=0 ;$timestampNow-$timestampPre > 300" | bc )
+            if [[ "$_jobage_debug" == 'on' ]]; then
+                echo "$_jbg_debug_title" "_jobage_slurm_save_queue time "
+                echo "$_jbg_debug_title" $_jobage_slurm_timestampNow $_jobage_slurm_timestampPre 
+                echo "$_jbg_debug_title" $(echo "scale=0 ;$_jobage_slurm_timestampNow-$_jobage_slurm_timestampPre > 300" | bc )
+
+            fi
+
             if [[ $(echo "scale=0 ;$_jobage_slurm_timestampNow-$_jobage_slurm_timestampPre > 300" | bc ) -eq 1 ]]; then
                 cp "$_jobage_dinfo1" "$_jobage_dinfo2"
             fi
