@@ -67,7 +67,7 @@ if `zsh` is used, add `source where_is_jobage/main.sh` to `~/.zsh`.
 only suggested for users having single linux account
 
 ```shell
-source main.sh --prefix path
+source main.sh --jbg_prefix path
 ```
 
 path is the specific working path, default is `$HOME/.local/jobage`
@@ -75,7 +75,7 @@ path is the specific working path, default is `$HOME/.local/jobage`
 ***Debug mod***
 
 ```shell
-source main.sh --debug 
+source main.sh --jbg_debug 
 ```
 
 open debug mod. more details will be printed.
