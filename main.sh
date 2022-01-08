@@ -16,7 +16,7 @@ POSITIONAL_ARGS=()
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --prefix)
+    --jbg_prefix)
       _jobage_wPath="$2"
       shift # past argument
       shift # past value
@@ -26,18 +26,18 @@ while [[ $# -gt 0 ]]; do
     #   shift # past argument
     #   shift # past value
     #   ;;
-    --help)
+    --jbg_help)
       _jobage_main_help='on'
       shift # past argument
       ;;
-    --debug)
+    --jbg_debug)
       _jobage_debug='on'
       shift # past argument
       ;;
-    -*|--*)
-      echo "Unknown option $1"
-      exit 1
-      ;;
+    # -*|--*)
+    #   echo "Unknown option $1"
+    #   exit 1
+    #   ;;
     *)
       POSITIONAL_ARGS+=("$1") # save positional arg
       shift # past argument
@@ -45,12 +45,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+
 if [[ "$_jobage_main_help" == "on" ]]; then
     echo '|-jobage(jbg) help: '
     echo "|-source main.sh [--help] [--debug] [--prefix path]"
-    echo "|--help        | show this help infomation"
-    echo "|--debug       | run jobage with debug mod. Runing jbg will print detals."
-    echo "|--prefix path | path to save jobage setting and data. default is $HOME/.local/jobage"
+    echo "|--jbg_help        | show this help infomation"
+    echo "|--jbg_debug       | run jobage with debug mod. Runing jbg will print detals."
+    echo "|--jbg_prefix path | path to save jobage setting and data. default is $HOME/.local/jobage"
 else
 
     if [[ "$_jobage_debug" == "on" ]]; then

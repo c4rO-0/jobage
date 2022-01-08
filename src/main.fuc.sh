@@ -332,7 +332,7 @@ jbg.help()
     echo '| - - - - '
     echo '| specify working path :'
     echo '| (only suggested for users having single linux account)'
-    echo '| source main.sh --prefix path'
+    echo '| source main.sh --jbg_prefix path'
     echo "| path is the specific working path, default is $HOME/.local/jobage"
     echo '| --------'
 }
