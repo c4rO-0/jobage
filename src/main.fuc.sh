@@ -307,6 +307,14 @@ jbg.help()
     echo -e '| project link (github) : https://github.com/c4rO-0/jobage'
     echo '| --------'
     echo '| found ' "$_jobage_system" " system."
+    echo '| found ' "$_jbg_SHELL" " enviroment."
+    echo '| found ' "$_jobage_wPath" " as working path."
+    if [[ "$_jobage_setting_loaded" == 'no' ]]; then
+        echo '| found ' "default setting."
+    else
+        echo '| found ' "user defined setting."
+    fi
+    echo '| --------'
     echo '| command list :'
     echo '| .q      | display queue infomation.'
     echo '| .qrun   | display running queue infomation.'
@@ -322,6 +330,11 @@ jbg.help()
     echo '| $ cp "$_jobage_default_setting" "$_jobage_setting"; '
     echo '| $ edit "$_jobage_setting"; '
     echo '| $ source main.sh ;'
+    echo '| - - - - '
+    echo '| specific working path :'
+    echo '| (only suggested for users having single linux account)'
+    echo '| source main.sh --prefix path'
+    echo "| path is the specific working path, default is $HOME/.local/jobage"
     echo '| --------'
 }
 
