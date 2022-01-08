@@ -315,23 +315,22 @@ jbg.help()
         echo '| found ' "user defined setting."
     fi
     echo '| --------'
+    echo '| (run .any -h/--help to get the detailed help information for any command.)' 
     echo '| command list :'
     echo '| .q      | display queue infomation.'
     echo '| .qrun   | display running queue infomation.'
     echo '| .qh     | display last two queue infomation.'
     echo '| - - - - '
     echo '| .sub    | submit job.'
-    echo '| .kill   | kill specific jobs by index/grep/all.'
+    echo '| .kill   | kill specific jobs.'
     echo '| .cd     | go to the working dirctory of job.'
-    echo '| - - - - '
-    echo '| run .any -h/--help to get the help information for any command.' 
     echo '| - - - - '
     echo '| custom setting : '
     echo '| $ cp "$_jobage_default_setting" "$_jobage_setting"; '
     echo '| $ edit "$_jobage_setting"; '
     echo '| $ source main.sh ;'
     echo '| - - - - '
-    echo '| specific working path :'
+    echo '| specify working path :'
     echo '| (only suggested for users having single linux account)'
     echo '| source main.sh --prefix path'
     echo "| path is the specific working path, default is $HOME/.local/jobage"
@@ -374,8 +373,8 @@ jbg.qrun()
 jbg.kill() {
     if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
         echo '|-kill spicific job.'
-        echo '|-kill [id]'
-        echo '|-- kill the job with the [id]. [id] is the index shwon in jbg.q '
+        echo '|-kill [num]'
+        echo '|-- kill the job with the [num]. [num] is the index shwon in jbg.q '
         echo '|-kill [grep str]'
         echo '|-- kill jobs in which job name or working path contains str'
         echo '|-kill [all]'

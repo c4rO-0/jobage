@@ -62,6 +62,24 @@ add `source where_is_jobage/main.sh` to `~/.bashrc`.
 
 if `zsh` is used, add `source where_is_jobage/main.sh` to `~/.zsh`.
 
+***Spefiy working path***
+
+only suggested for users having single linux account
+
+```shell
+source main.sh --prefix path
+```
+
+path is the specific working path, default is `$HOME/.local/jobage`
+
+***Debug mod***
+
+```shell
+source main.sh --debug 
+```
+
+open debug mod. more details will be printed.
+
 
 ### 3. test
 

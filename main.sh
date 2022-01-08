@@ -48,9 +48,9 @@ done
 if [[ "$_jobage_main_help" == "on" ]]; then
     echo '|-jobage(jbg) help: '
     echo "|-source main.sh [--help] [--debug] [--prefix path]"
-    echo "|-help        | show this help infomation"
-    echo "|-debug       | run jobage with debug mod. Runing jbg will print detals."
-    echo "|-prefix path | path to save jobage setting and data. default is $HOME/.local/jobage"
+    echo "|--help        | show this help infomation"
+    echo "|--debug       | run jobage with debug mod. Runing jbg will print detals."
+    echo "|--prefix path | path to save jobage setting and data. default is $HOME/.local/jobage"
 else
 
     if [[ "$_jobage_debug" == "on" ]]; then
