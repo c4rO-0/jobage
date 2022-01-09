@@ -73,7 +73,7 @@ function _jobage_queue_display() {
                         strStatus=$(echo "$line" | awk '{print $5}')
                         if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                             echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
-                            n_run=$((n_run+1)) ;
+
                             if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
                                 echo "$_jbg_split_line_mark";
                             fi
