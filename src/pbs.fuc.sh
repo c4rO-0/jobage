@@ -89,7 +89,7 @@ function _jobage_pbs_save_queue() {
 
     # read json
     # https://github.com/owenthereal/jqplay
-    "$_jobage_pbs_fuc_srcPath/jq-linux64" ".Data.Job[] | [.Job_Id, .Job_Name, .job_state, .init_work_dir, .resources_used.walltime]" "$_jobage_lsf_json_dinfo"
+    "$_jobage_pbs_fuc_srcPath/jq-linux64" ".Data.Job[] | [.Job_Id, .Job_Name, .job_state, .init_work_dir, .resources_used.walltime]" "$_jobage_lsf_json_dinfo" | sed -e ':a;N;$!ba;s/,\n//g; s/\[//g; s/\]//g; s/"//g;'
     
     # _jobage_lsf_timestampNow=$(date +%s)
 
