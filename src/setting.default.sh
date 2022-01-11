@@ -1,3 +1,5 @@
+# _jobage_system=''
+
 # color 
 _jbg_set_color_start="39m"
 _jbg_set_color_start_checked="96;104m"

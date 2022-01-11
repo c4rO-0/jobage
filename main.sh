@@ -8,6 +8,8 @@ _jobage_main_help='off'
 
 _jobage_wPath="$HOME/.local/jobage"
 
+_jobage_system=''
+
 # -------------
 # read args from answer :
 # https://stackoverflow.com/a/14203146
@@ -33,6 +35,11 @@ while [[ $# -gt 0 ]]; do
     --jbg_debug)
       _jobage_debug='on'
       shift # past argument
+      ;;
+    --jbg_system)
+      _jobage_system="$2"
+      shift # past argument
+      shift # past value
       ;;
     # -*|--*)
     #   echo "Unknown option $1"
@@ -83,9 +90,6 @@ else
     _jobage_setting_loaded='no'
     _jobage_setting="$_jobage_wPath/setting.sh"
 
-    _jobage_system=''
-    _jobage_is_lsf=''
-    _jobage_is_slurm=''
 
     _jobage_array_jobDir=()
     _jobage_array_jobID=()
@@ -125,24 +129,33 @@ else
     fi
 
     # detect cluster scheduling system
-    if [[ -x "$(command -v bqueues)" ]] && [[ "$(bqueues -V 2>&1 | head -1)" == *'IBM Spectrum LSF'* ]]; then
-        _jobage_system='lsf'
-        source "$_jobage_srcPath/src/lsf.fuc.sh"
-    elif [[ -x "$(command -v squeue)" ]] && [[ "$(squeue -V 2>&1 | head -1)" == *'slurm '* ]]; then
-        _jobage_system='slurm'
-        source "$_jobage_srcPath/src/slurm.fuc.sh"
+    n_system=0
+    if [[ "$_jobage_system" == '' ]]; then
+        if [[ -x "$(command -v bqueues)" ]] && [[ "$(bqueues -V 2>&1 | head -1)" == *'IBM Spectrum LSF'* ]]; then
+            _jobage_system='lsf'
+            n_system=$((n_system+1))
+        fi
+        
+        if [[ -x "$(command -v squeue)" ]] && [[ "$(squeue -V 2>&1 | head -1)" == *'slurm '* ]]; then
+            _jobage_system='slurm'
+            n_system=$((n_system+1))
+        fi
+        
+        if [[ -x "$(command -v qstat)" ]] && [[ "$(qstat --version 2>&1 | head -1)" =~ "Version"|"pbs_version" ]]; then
+            _jobage_system='pbs'
+            n_system=$((n_system+1))       
+        fi
+    else
+        if [[ "$_jobage_system" == 'lsf' ]] || [[ "$_jobage_system" == 'slurm' ]] || [[ "$_jobage_system" == "pbs" ]]; then
+            n_system=1
+        fi
     fi
 
-    if [[ ! "$_jobage_system" == '' ]]; then
-        
-        if [[ "$_jobage_debug" == 'on' ]]; then
-            echo "*|-jbg debug: found " "$_jobage_system"
-        fi
-        source "$_jobage_srcPath/src/main.fuc.sh";
-    else
+    if (( n_system == 0 ));then
+
         if [[ "$_jobage_debug" == 'on' ]]; then
             echo "*|-jbg debug: not found cluster scheduling systems"
-            echo "*|-in [lsf, slurm ...]"
+            echo "*|-in [lsf, slurm pbs ...]"
         fi
         jbg.help() 
         {
@@ -157,6 +170,7 @@ else
             echo '| please check you are using one of the systems:'
             echo '| lsf   : ' ' run "bqueues -V"'
             echo '| slurm : ' ' run "squeue -V"'
+            echo '| pbs   : ' ' run "qstst --version"'
             echo '| --------'
             echo '| found ' "$_jbg_SHELL" " enviroment."
             echo '| found ' "$_jobage_wPath" " as working path."
@@ -169,6 +183,66 @@ else
 
         }
 
+    elif (( n_system > 1 ));then
+        if [[ "$_jobage_debug" == 'on' ]]; then
+            echo "*|-jbg debug: found multiple cluster scheduling systems"
+            echo "*|-in [lsf, slurm pbs ...]"
+        fi
+        jbg.help() 
+        {
+            echo "| a job-management tool for cluster scheduling systems."
+            cat "$_jobage_srcPath/src/version.dat";
+            echo '| author   : C4r-bs'
+            # echo '| C4r homepage : http://papercomment.tech/'
+            echo -e '| project link (gitee)  : https://gitee.com/C4r/jobage'
+            echo -e '| project link (github) : https://github.com/c4rO-0/jobage'
+            echo '| --------'
+            echo '| multiple supported cluster scheduling systems found.'
+            echo '| please check you are using one of the systems:'
+            echo '| lsf   : ' ' run "bqueues -V"'
+            echo '| slurm : ' ' run "squeue -V"'
+            echo '| pbs   : ' ' run "qstst --version"'
+            echo '| --------'
+            echo '| choose one by run:'
+            echo '| source mian.sh --jbg_system lsf/slurm/pbs'
+            echo '| --------'
+            echo '| found ' "$_jbg_SHELL" " enviroment."
+            echo '| found ' "$_jobage_wPath" " as working path."
+            if [[ "$_jobage_setting_loaded" == 'no' ]]; then
+                echo '| found ' "default setting."
+            else
+                echo '| found ' "user defined setting."
+            fi
+            echo '| --------'
+
+        }
+    else
+        if [[ "$_jobage_debug" == 'on' ]]; then
+            echo "*|-jbg debug: found " "$_jobage_system"
+        fi
+
+        if [[ "$_jobage_system" == 'lsf' ]] && [[ -x "$(command -v bqueues)" ]] && [[ "$(bqueues -V 2>&1 | head -1)" == *'IBM Spectrum LSF'* ]]; then
+            if [[ "$_jobage_debug" == 'on' ]]; then
+                echo "*|-jbg debug: source " "src/lsf.fuc.sh"
+            fi        
+            source "$_jobage_srcPath/src/lsf.fuc.sh"
+        fi
+        
+        if [[ "$_jobage_system" == 'slurm' ]] &&  [[ -x "$(command -v squeue)" ]] && [[ "$(squeue -V 2>&1 | head -1)" == *'slurm '* ]]; then
+            if [[ "$_jobage_debug" == 'on' ]]; then
+                echo "*|-jbg debug: source " "src/slurm.fuc.sh"
+            fi             
+            source "$_jobage_srcPath/src/slurm.fuc.sh"
+        fi
+        
+        if [[ "$_jobage_system" == 'pbs' ]] && [[ -x "$(command -v qstat)" ]] && [[ "$(qstat --version 2>&1 | head -1)" =~ "Version"|"pbs_version" ]]; then
+            if [[ "$_jobage_debug" == 'on' ]]; then
+                echo "*|-jbg debug: source " "src/pbs.fuc.sh"
+            fi   
+            source "$_jobage_srcPath/src/pbs.fuc.sh"   
+        fi
+        
+        source "$_jobage_srcPath/src/main.fuc.sh";
     fi
 
 fi
