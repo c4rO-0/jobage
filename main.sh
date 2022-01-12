@@ -141,7 +141,9 @@ else
             n_system=$((n_system+1))
         fi
         
-        if [[ -x "$(command -v qstat)" ]] && [[ "$(qstat --version 2>&1 | head -1)" =~ "Version"|"pbs_version" ]]; then
+        if [[ -x "$(command -v qstat)" ]] \
+            && ( [[ "$(qstat --version 2>&1 | head -1)" =~ "Version" ]] \
+                || [[ "$(qstat --version 2>&1 | head -1)" =~ "pbs_version" ]] ); then
             _jobage_system='pbs'
             n_system=$((n_system+1))       
         fi
@@ -235,7 +237,9 @@ else
             source "$_jobage_srcPath/src/slurm.fuc.sh"
         fi
         
-        if [[ "$_jobage_system" == 'pbs' ]] && [[ -x "$(command -v qstat)" ]] && [[ "$(qstat --version 2>&1 | head -1)" =~ "Version"|"pbs_version" ]]; then
+        if [[ "$_jobage_system" == 'pbs' ]] && [[ -x "$(command -v qstat)" ]] \
+            && ( [[ "$(qstat --version 2>&1 | head -1)" =~ "Version" ]] \
+                || [[ "$(qstat --version 2>&1 | head -1)" =~ "pbs_version" ]] ); then
             if [[ "$_jobage_debug" == 'on' ]]; then
                 echo "*|-jbg debug: source " "src/pbs.fuc.sh"
             fi   
