@@ -48,7 +48,7 @@ if [[ "$(type -t _jobage_save_queue)" ]]; then
                             if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                                 echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
                                 n_run=$((n_run+1)) ;
-                            elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                            elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]] || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
                                 echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
                                 n_wait=$((n_cg+1)) ;
                             else
@@ -79,7 +79,7 @@ if [[ "$(type -t _jobage_save_queue)" ]]; then
                                     echo "$_jbg_split_line_mark";
                                 fi
                                 n_run=$((n_run+1)) ;
-                            elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                            elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]] || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
                                 n_wait=$((n_cg+1)) ;
                             else 
                                 # [[ "$strStatus" == 'CG' ]]; then
@@ -148,11 +148,11 @@ if [[ "$(type -t _jobage_save_queue)" ]]; then
                                 strStatus=$(echo "$line" | awk '{print $5}')
                                 if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                                     echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
-                                elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                                elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]  || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
                                     echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
                                 else
                                     # [[ "$strStatus" == 'CG' ]]; then
-                                echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                                    echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
                                 fi
                             fi
                             # echo '|*' $line
@@ -195,7 +195,7 @@ if [[ "$(type -t _jobage_save_queue)" ]]; then
                                     strStatus=$(echo "$line" | awk '{print $5}')
                                     if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                                         echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
-                                    elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                                    elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]] || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
                                         echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
                                     else 
                                         # [[ "$strStatus" == 'CG' ]]; then
@@ -214,7 +214,7 @@ if [[ "$(type -t _jobage_save_queue)" ]]; then
                                 strStatus=$(echo "$line" | awk '{print $5}')
                                 if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
                                     echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
-                                elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]; then
+                                elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]] || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
                                     echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
                                 else 
                                     # [[ "$strStatus" == 'CG' ]]; then
