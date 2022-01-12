@@ -85,16 +85,32 @@ else
 
     # detect type fuc
     if [[ "$_jbg_SHELL" == *"/bash" ]]; then
+
+        # _jbg_fuc_exist="type -t"
+
         function _jbg_fuc_exist()
         {
-            type -t "$@"
+            if [[ "$(type -t $@)" ]]; then
+                echo 'exist'
+            else 
+                return
+            fi
         }
 
     else
+        # _jbg_fuc_exist="type -t"
+        # _jbg_fuc_exist=( whence -w $@ | grep -q 'function' ) # Changes variable type as well
+        
         function _jbg_fuc_exist()
         {
-            whence -w "$@" | grep -q 'function'
+            # echo "$(whence -w $@ | grep -q 'function')"
+            if whence -w "$@" | grep -q 'function'; then
+                echo 'exist'
+            else 
+                return
+            fi
         }
+
     fi
 
 
