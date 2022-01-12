@@ -9,7 +9,7 @@ else
     _jobage_main_fuc_srcPath=$(dirname $(readlink -f "$0"))
 fi
 
-if [[ "$(type -t _jobage_save_queue)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
     function _jobage_queue_display() {
         
         outType='all'
@@ -108,7 +108,7 @@ else
     echo "not found _jobage_save_queue"
 fi
 
-if [[ "$(type -t _jobage_save_queue)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
     function _jobage_queue_history_display()
     {
 
@@ -238,7 +238,7 @@ if [[ "$(type -t _jobage_save_queue)" ]]; then
     }
 fi
 
-if [[ "$(type -t _jobage_queue_history_display)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_queue_history_display)" ]]; then
     _jobage_cd()
     {
         if [[ "$_jbg_SHELL" ==  *"/bash" ]]; then
@@ -259,7 +259,7 @@ if [[ "$(type -t _jobage_queue_history_display)" ]]; then
     }  
 fi
 
-if [[ "$(type -t _jobage_cancel_index)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_cancel_index)" ]]; then
     _jobage_kill_grep() {
 
         jobInfo=$(_jobage_queue_display | grep -v "$jbg_title" | grep "$@")
@@ -305,7 +305,7 @@ if [[ "$(type -t _jobage_cancel_index)" ]]; then
     }
 fi
 
-if [[ "$(type -t _jobage_save_queue)" ]] && [[ "$(type -t _jobage_queue_display)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_save_queue)" ]] && [[ "$(_jbg_fuc_exist _jobage_queue_display)" ]]; then
     jbg.q() 
     {
         if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
@@ -327,7 +327,7 @@ if [[ "$(type -t _jobage_save_queue)" ]] && [[ "$(type -t _jobage_queue_display)
     }
 fi
 
-if [[ "$(type -t _jobage_save_queue)" ]] && [[ "$(type -t _jobage_queue_display)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_save_queue)" ]] && [[ "$(_jbg_fuc_exist _jobage_queue_display)" ]]; then
     jbg.qrun() 
     {
         if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
@@ -341,7 +341,7 @@ if [[ "$(type -t _jobage_save_queue)" ]] && [[ "$(type -t _jobage_queue_display)
     }
 fi
 
-if [[ "$(type -t _jobage_kill_grep)" ]] && [[ "$(type -t _jobage_cancel_all)" ]] && [[ "$(type -t _jobage_cancel_index)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_kill_grep)" ]] && [[ "$(_jbg_fuc_exist _jobage_cancel_all)" ]] && [[ "$(_jbg_fuc_exist _jobage_cancel_index)" ]]; then
     jbg.kill() {
         if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
             echo '|-kill spicific job.'
@@ -379,7 +379,7 @@ if [[ "$(type -t _jobage_kill_grep)" ]] && [[ "$(type -t _jobage_cancel_all)" ]]
     }
 fi
 
-if [[ "$(type -t _jobage_queue_history_display)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_queue_history_display)" ]]; then
     jbg.qh() {
         if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
             echo '|-show the last two queue informantion.'
@@ -390,7 +390,7 @@ if [[ "$(type -t _jobage_queue_history_display)" ]]; then
     }
 fi
 
-if [[ "$(type -t _jobage_cd)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_cd)" ]]; then
     jbg.cd()
     {
         if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
@@ -402,7 +402,7 @@ if [[ "$(type -t _jobage_cd)" ]]; then
     }
 fi
 
-if [[ "$(type -t _jobage_submit)" ]]; then
+if [[ "$(_jbg_fuc_exist _jobage_submit)" ]]; then
     jbg.sub()
     {
         if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
@@ -436,23 +436,23 @@ jbg.help()
     echo '| --------'
     echo '| (run .any -h/--help to get the detailed help information for any command.)' 
     echo '| command list :'
-    if [[ "$(type -t jbg.q)" ]]; then
+    if [[ "$(_jbg_fuc_exist jbg.q)" ]]; then
         echo '| .q      | display queue infomation.'
     fi
-    if [[ "$(type -t jbg.qrun)" ]]; then
+    if [[ "$(_jbg_fuc_exist jbg.qrun)" ]]; then
         echo '| .qrun   | display running queue infomation.'
     fi    
-    if [[ "$(type -t jbg.qh)" ]]; then
+    if [[ "$(_jbg_fuc_exist jbg.qh)" ]]; then
         echo '| .qh     | display last two queue infomation.'
     fi 
     echo '| - - - - ' 
-    if [[ "$(type -t jbg.sub)" ]]; then
+    if [[ "$(_jbg_fuc_exist jbg.sub)" ]]; then
         echo '| .sub    | submit job.'
     fi      
-    if [[ "$(type -t jbg.kill)" ]]; then
+    if [[ "$(_jbg_fuc_exist jbg.kill)" ]]; then
         echo '| .kill   | kill specific jobs.'
     fi     
-    if [[ "$(type -t jbg.cd)" ]]; then
+    if [[ "$(_jbg_fuc_exist jbg.cd)" ]]; then
         echo '| .cd     | go to the working dirctory of job.'
     fi
     echo '| - - - - '

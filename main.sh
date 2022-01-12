@@ -74,11 +74,27 @@ else
             echo "*|-jbg debug: _jobage_srcPath " "${BASH_SOURCE[0]}"
         fi
         _jobage_srcPath=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
+
     else
         if [[ "$_jobage_debug" == 'on' ]]; then
             echo "*|-jbg debug: _jobage_srcPath " "$0"
         fi
         _jobage_srcPath=$(dirname $(readlink -f "$0"))
+    fi
+
+
+    # detect type fuc
+    if [[ "$_jbg_SHELL" == *"/bash" ]]; then
+        function _jbg_fuc_exist()
+        {
+            type -t "$@"
+        }
+
+    else
+        function _jbg_fuc_exist()
+        {
+            whence -w "$@" | grep -q 'function'
+        }
     fi
 
 
