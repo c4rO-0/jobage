@@ -353,15 +353,27 @@ if [[ "$(type -t _jobage_kill_grep)" ]] && [[ "$(type -t _jobage_cancel_all)" ]]
             echo '|-- kill all jobs '
             return
         fi
-        if [[ "$1" == "grep" ]]; then
-            _jobage_kill_grep "${@:2}"
-        elif [[ "$1" == "all" ]]; then
-            _jobage_cancel_all "$@"
-        else
-            if [[ "$_jobage_debug" == 'on' ]]; then
-                echo "$_jbg_debug_title" "jbg.kill " "$@"
+        if (( $# >= 1 )); then
+            if [[ "$1" == "grep" ]]; then
+                if (( $# == 2 )); then
+                    _jobage_kill_grep "${@:2}"
+                else
+                    echo '|-kill error. grep need single input string.'
+                fi
+            elif [[ "$1" == "all" ]]; then
+                _jobage_cancel_all "$@"
+            else
+                if [[ "$_jobage_debug" == 'on' ]]; then
+                    echo "$_jbg_debug_title" "jbg.kill " "$@"
+                fi
+                if (( $# == 1 )); then
+                    _jobage_cancel_index "$@"
+                else
+                    echo '|-kill error. only one num requested.'
+                fi
             fi
-            _jobage_cancel_index "$@"
+        else
+            echo '|-kill error. need input num/grep/all.'
         fi
         
     }

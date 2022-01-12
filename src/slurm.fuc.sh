@@ -63,13 +63,13 @@ _jobage_slurm_save_queue()
         fi
     fi
 
-    _jobage_slurm_jobs=$(squeue -u "$USER" -o "%.10i %.9P %.12j %.2t %.10M %.5D %.Z" | tail -n +2 | sort -k 2n)
+    _jobage_slurm_jobs=$(squeue -u "$USER" -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.Z" | tail -n +2 | sort -k 2n)
 
     { { date ; echo " " $_jobage_slurm_timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo1"
     
     echo "----------" >> "$_jobage_dinfo1"
 
-    printf "%6s %10s %11s %10s %3s %8s %8s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODES" "WORK_DIR" >>  "$_jobage_dinfo1"
+    printf "%6s %10s %11s %10s %3s %8s %11s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODExCPU" "WORK_DIR" >>  "$_jobage_dinfo1"
     
     _jobage_array_jobDir=($(echo "$_jobage_slurm_jobs" | awk '{print $7}'))
     _jobage_array_jobID=($(echo "$_jobage_slurm_jobs" | awk '{print $1}'))
