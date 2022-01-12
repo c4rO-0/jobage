@@ -85,10 +85,10 @@ function _jobage_pbs_save_queue() {
     printf "%6s %10s %11s %10s %3s %8s %11s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODExCPU" "WORK_DIR" >>  "$_jobage_dinfo1"
     # # echo "$jobs" | nl -v 1
     
-    _jobage_array_jobDir=($(echo "$_jobage_lsf_jobs" | awk '{print $7}'))
-    _jobage_array_jobID=($(echo "$_jobage_lsf_jobs" | awk '{print $1}'))
+    _jobage_array_jobDir=($(echo "$_jobage_pbs_jobs" | awk '{print $7}'))
+    _jobage_array_jobID=($(echo "$_jobage_pbs_jobs" | awk '{print $1}'))
 
-    echo "$_jobage_lsf_jobs" | nl -v 1 | sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g' | sed 's/\$HOME/~/g' >> "$_jobage_dinfo1"
+    echo "$_jobage_pbs_jobs" | nl -v 1 | sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g' | sed 's/\$HOME/~/g' >> "$_jobage_dinfo1"
 }
 
 
