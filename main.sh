@@ -90,7 +90,7 @@ else
 
         function _jbg_fuc_exist()
         {
-            if [[ "$( type -t $@ )" ]]; then
+            if [[ ! -z "$( type -t $@ )" ]]; then
                 echo 'exist'
             else 
                 return
