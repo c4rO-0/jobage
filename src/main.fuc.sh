@@ -11,19 +11,13 @@ fi
 
 function _jbg_format_queue()
 {
-    _jbg_queue_OLD_IFS="$IFS"
-    IFS=$'\n'
-    _jbg_format_in="$@"
-    _jbg_format_array=(${jbg_format_in// / })
-    printf "%6s %10s %11s %10s %3s %8s %11s %s" \
-    "${jbg_format_array[1]}" "${jbg_format_array[2]}" \
-    "${jbg_format_array[3]}" "${jbg_format_array[4]}" \
-    "${jbg_format_array[5]}" "${jbg_format_array[6]}" \
-    "${jbg_format_array[7]}" "${jbg_format_array[8]}"
-
-    IFS="$_jbg_queue_OLD_IFS"
-
+    echo "$@" | awk '{printf("%6s %10s %11s %20s %3s %8s %11s %s", \
+    $1, $2, \
+    $3, $4, \
+    $5, $6, \
+    $7, $8)}'
 }
+
 
 if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
     function _jbg_queue_display() {

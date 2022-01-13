@@ -97,7 +97,7 @@ function _jobage_lsf_save_queue() {
     # echo "debug---|"
     echo "----------" >> "$_jobage_dinfo1"
 
-    printf "%6s %10s %11s %10s %3s %8s %8s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "HOSTS" "WORK_DIR" >>  "$_jobage_dinfo1"
+    printf "%6s %10s %11s %20s %3s %8s %11s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "HOSTS" "WORK_DIR" >>  "$_jobage_dinfo1"
     # echo "$jobs" | nl -v 1
     
     _jobage_array_jobDir=($(echo "$_jobage_lsf_jobs" | awk '{print $7}'))
