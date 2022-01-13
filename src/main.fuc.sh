@@ -9,6 +9,18 @@ else
     _jobage_main_fuc_srcPath=$(dirname $(readlink -f "$0"))
 fi
 
+function format_queue()
+{
+    jbg_format_in="$@"
+    jbg_format_array=(${jbg_format_in// / })
+    printf "%6s %10s %11s %10s %3s %8s %11s %s\n" \
+    "${jbg_format_array[1]}" "${jbg_format_array[2]}" \
+    "${jbg_format_array[3]}" "${jbg_format_array[4]}" \
+    "${jbg_format_array[5]}" "${jbg_format_array[6]}" \
+    "${jbg_format_array[7]}" "${jbg_format_array[8]}"
+
+}
+
 if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
     function _jobage_queue_display() {
         
@@ -42,21 +54,21 @@ if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
 
                     if [[ "$outType" == "all" ]]; then
                         if (( nline == 3 ));then
-                            echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
+                            echo -e "$strStart $_jbg_set_mark_job_wait " "$(format_queue $line)"; 
                         else
                             strStatus=$(echo "$line" | awk '{print $5}')
                             if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                                echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                                echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$(format_queue $line)";
                                 n_run=$((n_run+1)) ;
                             elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]] || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
-                                echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
+                                echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$(format_queue $line)"; 
                                 n_wait=$((n_cg+1)) ;
                             else
                                 # [[ "$strStatus" == 'CG' ]]; then
                                 if [[ "$_jobage_debug" == 'on' ]]; then
                                     echo "$_jbg_debug_title" "found warn line " ">$line<"
                                 fi
-                                echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                                echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$(format_queue $line)"; 
                                 n_cg=$((n_cg+1)) ;
                             fi
                             n_job=$((n_job+1));
@@ -66,14 +78,14 @@ if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
                         fi
                     else
                         if (( nline == 3 ));then
-                            echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
+                            echo -e "$strStart $_jbg_set_mark_job_wait " "$(format_queue $line)"; 
                             if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
                                 echo "$_jbg_split_line_mark";
                             fi
                         else
                             strStatus=$(echo "$line" | awk '{print $5}')
                             if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                                echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                                echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$(format_queue $line)";
 
                                 if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
                                     echo "$_jbg_split_line_mark";
@@ -87,7 +99,7 @@ if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
                                     echo "$_jbg_debug_title" "found warn line " ">$line<"
                                 fi
 
-                                echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                                echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$(format_queue $line)"; 
                                 if [[ "$_jbg_split_line" == 'y' ]] || [[ "$_jbg_split_line" == 'Y' ]];then
                                     echo "$_jbg_split_line_mark";
                                 fi
@@ -143,16 +155,16 @@ if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
                                 # echo 'find cPath'
                             fi
                             if (( nline == 3 ));then
-                                echo -e "$strStart $_jbg_set_mark_job_wait " "$line"; 
+                                echo -e "$strStart $_jbg_set_mark_job_wait " "$(format_queue $line)"; 
                             else
                                 strStatus=$(echo "$line" | awk '{print $5}')
                                 if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                                    echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                                    echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$(format_queue $line)";
                                 elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]]  || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
-                                    echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
+                                    echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$(format_queue $line)"; 
                                 else
                                     # [[ "$strStatus" == 'CG' ]]; then
-                                    echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                                    echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$(format_queue $line)"; 
                                 fi
                             fi
                             # echo '|*' $line
@@ -194,12 +206,12 @@ if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
                                 else
                                     strStatus=$(echo "$line" | awk '{print $5}')
                                     if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                                        echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                                        echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$(format_queue $line)";
                                     elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]] || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
-                                        echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
+                                        echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$(format_queue $line)"; 
                                     else 
                                         # [[ "$strStatus" == 'CG' ]]; then
-                                        echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                                        echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$(format_queue $line)"; 
                                     fi
                                 fi
                                 # echo '|*' $line
@@ -213,12 +225,12 @@ if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
                             else
                                 strStatus=$(echo "$line" | awk '{print $5}')
                                 if [[ "$strStatus" == 'RUN' ]] || [[ "$strStatus" == 'R' ]]; then 
-                                    echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$line";
+                                    echo -e "$strStart""\033[$_jbg_set_color_job_run $_jbg_set_mark_job_run \033[0m" "$(format_queue $line)";
                                 elif [[ "$strStatus" == 'PD' ]] || [[ "$strStatus" == 'PEND' ]] || [[ "$strStatus" == 'H' ]]  || [[ "$strStatus" == 'Q' ]]; then
-                                    echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$line"; 
+                                    echo -e "$strStart""\033[$_jbg_set_color_job_wait $_jbg_set_mark_job_wait \033[0m" "$(format_queue $line)"; 
                                 else 
                                     # [[ "$strStatus" == 'CG' ]]; then
-                                    echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$line"; 
+                                    echo -e "$strStart""\033[$_jbg_set_color_job_warn $_jbg_set_mark_job_warn \033[0m" "$(format_queue $line)"; 
                                 fi
                             fi
                             # echo '|*' $line
