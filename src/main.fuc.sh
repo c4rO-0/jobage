@@ -20,7 +20,7 @@ function _jbg_format_queue()
 
 
 if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]]; then
-    function _jbg_queue_display() {
+    function _jobage_queue_display() {
         
         outType='all'
 
