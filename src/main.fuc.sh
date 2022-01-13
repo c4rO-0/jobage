@@ -9,7 +9,7 @@ else
     _jobage_main_fuc_srcPath=$(dirname $(readlink -f "$0"))
 fi
 
-function _jbg__jbg_format_queue()
+function _jbg_format_queue()
 {
     _jbg_queue_OLD_IFS="$IFS"
     IFS=$'\n'
