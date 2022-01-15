@@ -1,6 +1,6 @@
 # jobage 
 
-a job-management tool for cluster scheduling systems.
+a job-management tool with nice printing for cluster scheduling systems.
 remember only one set of commands for all the systems.
 
 
@@ -21,11 +21,11 @@ author : C4r-bs
 
 ## progress 
 
-|       | bash | zsh  |
-| ----- | ---- | ---- |
-| lsf   | done | done |
-| slurm | done | done |
-| PBS   | todo | -    |
+|       | bash  | zsh   |
+| ----- | ----- | ----- |
+| lsf   | done  | done  |
+| slurm | done  | done  |
+| PBS   | doing | -     |
 
 ## install
 
@@ -62,7 +62,7 @@ add `source where_is_jobage/main.sh` to `~/.bashrc`.
 
 if `zsh` is used, add `source where_is_jobage/main.sh` to `~/.zsh`.
 
-***Spefiy working path***
+***Specify working path***
 
 only suggested for users having single linux account
 
@@ -139,5 +139,5 @@ rm "$_jobage_setting";
 
 ## todo list
 
--[x] jbg.sub
+-[ ] auto-generate scripts.
 
