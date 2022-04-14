@@ -74,7 +74,7 @@ _jobage_slurm_save_queue()
     _jobage_array_jobDir=($(echo "$_jobage_slurm_jobs" | awk '{print $7}'))
     _jobage_array_jobID=($(echo "$_jobage_slurm_jobs" | awk '{print $1}'))
 
-    echo "$_jobage_slurm_jobs" | nl -v 1 | sed 's/\/.*\/shengbi/~/g' | sed 's/\/\.\///g' >> "$_jobage_dinfo1"
+    echo "$_jobage_slurm_jobs" | nl -v 1 | sed 's/\/.*\/$HOME/~/g' | sed 's/\/\.\///g' >> "$_jobage_dinfo1"
     
 }
 
