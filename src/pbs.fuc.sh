@@ -49,8 +49,15 @@ function _jobage_pbs_save_queue() {
     # .all.Data[].Job| [.Job_Id, .Job_Name, .job_state, .init_work_dir, .resources_used.walltime]
 
     # save xml files
-    qstat -u "$USER" -f -x > "$_jobage_lsf_raw_xml_dinfo"
-    
+    if [ "$#" -eq 0 ]; then
+        qstat -u "$USER" -f -x > "$_jobage_lsf_raw_xml_dinfo"
+    else
+        if [[ "$@" == "all" ]]; then
+            qstat -f -x > "$_jobage_lsf_raw_xml_dinfo"
+        else
+            qstat "$@" -f -x > "$_jobage_lsf_raw_xml_dinfo"
+        fi
+    fi        
     # convert to json
     # github.com/hay/xml2json
     "$_jobage_pbs_fuc_srcPath/xml2json.py" -t xml2json -o "$_jobage_lsf_json_dinfo" "$_jobage_lsf_raw_xml_dinfo"

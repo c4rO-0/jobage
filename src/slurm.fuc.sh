@@ -63,7 +63,15 @@ _jobage_slurm_save_queue()
         fi
     fi
 
-    _jobage_slurm_jobs=$(squeue -u "$USER" -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.Z" | tail -n +2 | sort -k 2n)
+    if [ "$#" -eq 0 ]; then
+        _jobage_slurm_jobs=$(squeue -u "$USER" -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.Z" | tail -n +2 | sort -k 2n)
+    else
+        if [[ "$@" == "all" ]]; then
+            _jobage_slurm_jobs=$(squeue -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.Z" | tail -n +2 | sort -k 2n)
+        else
+            _jobage_slurm_jobs=$(squeue "$@" -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.Z" | tail -n +2 | sort -k 2n)
+        fi
+    fi
 
     { { date ; echo " " $_jobage_slurm_timestampNow ;}  | tr -d '\n' ; echo ; } > "$_jobage_dinfo1"
     

@@ -46,7 +46,20 @@ function _jobage_lsf_raw() {
         return
     fi
 
-    _jobage_lsf_info=$(bjobs -u $USER -o "jobid:7 queue:10 job_name:20 stat:5 run_time exec_host:12 sub_cwd")
+
+    if [ "$#" -eq 0 ]; then
+
+        _jobage_lsf_info=$(bjobs -u $USER -o "jobid:7 queue:10 job_name:20 stat:5 run_time exec_host:12 sub_cwd")
+    else
+        if [[ "$@" == "all" ]]; then
+
+            _jobage_lsf_info=$(bjobs -o "jobid:7 queue:10 job_name:20 stat:5 run_time exec_host:12 sub_cwd")
+        else
+
+            _jobage_lsf_info=$(bjobs "$@" -o "jobid:7 queue:10 job_name:20 stat:5 run_time exec_host:12 sub_cwd")
+        fi
+    fi
+
 
     if [[ "$_jobage_lsf_info" == *"No unfinished job found"* ]]; then
         echo ""

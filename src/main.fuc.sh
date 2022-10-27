@@ -320,6 +320,10 @@ if [[ ! -z "$(_jbg_fuc_exist _jobage_save_queue)" ]] && [[ ! -z "$(_jbg_fuc_exis
     {
         if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
             echo '|-display queue infomation.'
+            echo '|-q all'
+            echo '|-- display all users submitted jobs'
+            echo '|-q any'
+            echo "|-- display jobs with options [any]."
             return
         fi
 
