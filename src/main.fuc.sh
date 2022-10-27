@@ -428,6 +428,25 @@ if [[ ! -z "$(_jbg_fuc_exist _jobage_submit)" ]]; then
     }
 fi
 
+if [[ ! -z "$(_jbg_fuc_exist _jobage_generate)" ]]; then
+    jbg.gen()
+    {
+        if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+            echo '|-generate a script.'
+            echo '|-sub script_name'
+            echo '|-For group users, you can modify your template script by '
+            if [[ "$_jobage_system" == "slurm" ]]; then
+                echo "|-creating a file  $_jobage_main_fuc_srcPath/template/template.group.slurm"
+            elif [[ "$_jobage_system" == "pbs" ]]; then
+                echo "|-creating a file  $_jobage_main_fuc_srcPath/template/template.group.pbs"
+            elif [[ "$_jobage_system" == "lsf" ]]; then 
+                echo "|-creating a file  $_jobage_main_fuc_srcPath/template/template.group.pbs"
+            fi
+            return
+        fi
+        _jobage_generate "$@"
+    }
+fi
 
 # function list
 jbg.help() 
@@ -469,15 +488,18 @@ jbg.help()
     if [[ ! -z "$(_jbg_fuc_exist jbg.cd)" ]]; then
         echo '| .cd     | go to the working dirctory of job.'
     fi
+        if [[ ! -z "$(_jbg_fuc_exist jbg.gen)" ]]; then
+        echo '| .gen     | generate a submitting script.'
+    fi
     echo '| - - - - '
     echo '| custom setting : '
     echo '| $ cp "$_jobage_default_setting" "$_jobage_setting"; '
     echo '| $ edit "$_jobage_setting"; '
-    echo '| $ source main.sh ;'
+    echo "| $ source $_jobage_main_fuc_srcPath/main.sh ;"
     echo '| - - - - '
     echo '| specify working path :'
     echo '| (only suggested for users having single linux account)'
-    echo '| source main.sh --jbg_prefix path'
+    echo "| source $_jobage_main_fuc_srcPath/main.sh --jbg_prefix path"
     echo "| path is the specific working path, default is $HOME/.local/jobage"
     echo '| --------'
 }

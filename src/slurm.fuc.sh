@@ -134,6 +134,16 @@ function _jobage_slurm_submit()
     fi
 }
 
+function _jobage_slurm_generate()
+{
+
+    if [[ -f "$_jobage_slurm_fuc_srcPath/template/template.group.slurm" ]]; then
+        cp "$_jobage_slurm_fuc_srcPath/template/template.group.slurm" "$@"
+    else
+        cp "$_jobage_slurm_fuc_srcPath/template/template.slurm" "$@"
+    fi
+}
+
 # -------------------------------------
 # end here
 # =====================================
@@ -157,4 +167,9 @@ function _jobage_cancel_all()
 function _jobage_submit()
 {
     _jobage_slurm_submit "$@"
+}
+
+function _jobage_generate()
+{
+    _jobage_slurm_generate "$@"
 }

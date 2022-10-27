@@ -177,6 +177,16 @@ function _jobage_lsf_submit()
     fi
 }
 
+function _jobage_lsf_generate()
+{
+
+    if [[ -f "$_jobage_lsf_fuc_srcPath/template/template.group.lsf" ]]; then
+        cp "$_jobage_lsf_fuc_srcPath/template/template.group.lsf" "$@"
+    else
+        cp "$_jobage_lsf_fuc_srcPath/template/template.lsf" "$@"
+    fi
+}
+
 # -------------------------------------
 # end here
 # =====================================
@@ -204,4 +214,9 @@ function _jobage_cancel_all()
 function _jobage_submit()
 {
     _jobage_lsf_submit "$@"
+}
+
+function _jobage_generate()
+{
+    _jobage_lsf_generate "$@"
 }

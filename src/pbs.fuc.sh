@@ -98,7 +98,15 @@ function _jobage_pbs_save_queue() {
     echo "$_jobage_pbs_jobs" | nl -v 1 | sed "s/\/.*\/$USER/~/g" | sed 's/\/\.\///g' | sed 's/\$HOME/~/g' >> "$_jobage_dinfo1"
 }
 
+function _jobage_pbs_generate()
+{
 
+    if [[ -f "$_jobage_pbs_fuc_srcPath/template/template.group.pbs" ]]; then
+        cp "$_jobage_pbs_fuc_srcPath/template/template.group.pbs" "$@"
+    else
+        cp "$_jobage_pbs_fuc_srcPath/template/template.pbs" "$@"
+    fi
+}
 
 # function _jobage_pbs_cancel() 
 # {
@@ -184,3 +192,9 @@ function _jobage_save_queue()
 # {
 #     _jobage_pbs_submit "$@"
 # }
+
+
+function _jobage_generate()
+{
+    _jobage_pbs_generate "$@"
+}
