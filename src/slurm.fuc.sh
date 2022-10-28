@@ -67,9 +67,9 @@ _jobage_slurm_save_queue()
         _jobage_slurm_jobs=$(squeue -u "$USER" -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.Z" | tail -n +2 | sort -k 2n)
     else
         if [[ "$@" == "all" ]]; then
-            _jobage_slurm_jobs=$(squeue -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.Z" | tail -n +2 | sort -k 2n)
+            _jobage_slurm_jobs=$(squeue -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.8u" | tail -n +2 | sort -k 2n)
         else
-            _jobage_slurm_jobs=$(squeue "$@" -o "%.10i %.9P %.12j %.2t %.10M %Dx%c %.Z" | tail -n +2 | sort -k 2n)
+            _jobage_slurm_jobs=$(squeue "$@"  | tail -n +2 | sort -k 2n)
         fi
     fi
 
@@ -77,7 +77,17 @@ _jobage_slurm_save_queue()
     
     echo "----------" >> "$_jobage_dinfo1"
 
-    printf "%6s %10s %11s %20s %3s %8s %11s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODExCPU" "WORK_DIR" >>  "$_jobage_dinfo1"
+    if [ "$#" -eq 0 ]; then
+        printf "%6s %10s %11s %20s %3s %8s %11s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODExCPU" "WORK_DIR" >>  "$_jobage_dinfo1"
+    else
+        if [[ "$@" == "all" ]]; then
+            printf "%6s %10s %11s %20s %3s %8s %11s %s\n" "num" "JOBID" "PARTITION" "NAME" "ST" "TIME" "NODExCPU" "USER" >>  "$_jobage_dinfo1"
+        else
+            printf "%6s %9s\n" "num" "SPECIFIED" >>  "$_jobage_dinfo1"
+        fi
+    fi
+
+    
     
     _jobage_array_jobDir=($(echo "$_jobage_slurm_jobs" | awk '{print $7}'))
     _jobage_array_jobID=($(echo "$_jobage_slurm_jobs" | awk '{print $1}'))
